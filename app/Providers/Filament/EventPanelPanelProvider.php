@@ -19,30 +19,36 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class DashboardPanelProvider extends PanelProvider
+use App\Http\Middleware\SetCurrentEvent;
+use Filament\Actions\Action;
+use App\Filament\EventPanel\Pages\EventDashboard;
+use Filament\Navigation\NavigationItem;
+
+class EventPanelPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+
         return $panel
-            ->default()
-            ->id('dashboard')
-            ->path('dashboard')
+            ->id('event')
+            ->path('event/{event}')
             ->brandName('PartyMaker')
-            ->login()
-            ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->discoverResources(in: app_path('Filament/EventPanel/Resources'), for: 'App\Filament\EventPanel\Resources')
+            ->discoverPages(in: app_path('Filament/EventPanel/Pages'), for: 'App\Filament\EventPanel\Pages')
             ->pages([
-                Dashboard::class,
+                EventDashboard::class
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
-            ])
+            ->discoverWidgets(in: app_path('Filament/EventPanel/Widgets'), for: 'App\Filament\EventPanel\Widgets')
+            ->widgets([])
+            // ->navigationItems([
+            //     NavigationItem::make('Dashboard')
+            //         ->icon('heroicon-o-arrow-left')
+            //         ->url(fn() => url('/dashboard'))
+            // ])
+            ->resourceCreatePageRedirect('index')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -53,11 +59,10 @@ class DashboardPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                SetCurrentEvent::class
             ])
-            ->resourceCreatePageRedirect('index')
-            ->resourceCreatePageRedirect('index')
             ->authMiddleware([
                 Authenticate::class,
-            ])->topNavigation();
+            ]);
     }
 }

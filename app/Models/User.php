@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
+     *s
      * @var list<string>
      */
     protected $fillable = [

@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Events\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\DatePicker;
 
 
 
@@ -15,14 +15,14 @@ class EventForm
     {
         return $schema
             ->components([
-                TextInput::make('name'),
-                DateTimePicker::make('date'),
-                Select::make('status')
-    ->options([
-        'weeding' => 'Weeding',
-        'birthday' => 'Birthday',
-        'christening' => 'Christening',
-    ])
+                TextInput::make('name')->required()->unique(),
+                DatePicker::make('date')->required()->date()->afterOrEqual(today())->native(false),
+                Select::make('type')->required()
+                    ->options([
+                        'wedding' => 'Wedding',
+                        'birthday' => 'Birthday',
+                        'christening' => 'Christening',
+                    ])->native(false)
             ]);
     }
 }

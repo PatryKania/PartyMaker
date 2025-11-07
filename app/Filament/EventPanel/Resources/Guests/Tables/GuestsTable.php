@@ -1,31 +1,25 @@
 <?php
 
-namespace App\Filament\Resources\Events\Tables;
+namespace App\Filament\EventPanel\Resources\Guests\Tables;
 
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 
-class EventsTable
+class GuestsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('date')->sortable()->searchable()->date('d.m.Y'),
-                TextColumn::make('type')->sortable(),
+                //
             ])
             ->filters([
                 //
             ])
-            ->recordUrl(fn($record) => url("/event/{$record->id}"))
             ->recordActions([
                 EditAction::make(),
-                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('date');
-            $table->enum('type', ['wedding', 'birthday', 'christening']); 
+            $table->enum('type', ['wedding', 'birthday', 'christening']);
             $table->timestamps();
         });
     }
