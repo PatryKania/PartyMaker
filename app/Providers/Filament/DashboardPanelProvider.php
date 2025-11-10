@@ -55,7 +55,7 @@ class DashboardPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->resourceCreatePageRedirect('index')
-            ->resourceCreatePageRedirect('index')
+            ->resourceePageRedirect('index')
             ->authMiddleware([
                 Authenticate::class,
             ])->topNavigation();

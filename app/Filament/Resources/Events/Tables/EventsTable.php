@@ -22,7 +22,7 @@ class EventsTable
             ->filters([
                 //
             ])
-            ->recordUrl(fn($record) => url("/event/{$record->id}"))
+            ->recordUrl(fn($record) => route('filament.event.pages.event-dashboard', ['tenant' => $record]))
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),

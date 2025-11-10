@@ -19,9 +19,10 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-use App\Http\Middleware\SetCurrentEvent;
+use App\Http\Middleware\ApplyEventThemeColors;
 use Filament\Actions\Action;
 use App\Filament\EventPanel\Pages\EventDashboard;
+use App\Models\Event;
 use Filament\Navigation\NavigationItem;
 
 class EventPanelPanelProvider extends PanelProvider
@@ -31,8 +32,9 @@ class EventPanelPanelProvider extends PanelProvider
 
         return $panel
             ->id('event')
-            ->path('event/{event}')
+            ->path('event')
             ->brandName('PartyMaker')
+            ->tenant(Event::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -43,11 +45,11 @@ class EventPanelPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/EventPanel/Widgets'), for: 'App\Filament\EventPanel\Widgets')
             ->widgets([])
-            // ->navigationItems([
-            //     NavigationItem::make('Dashboard')
-            //         ->icon('heroicon-o-arrow-left')
-            //         ->url(fn() => url('/dashboard'))
-            // ])
+            ->navigationItems([
+                NavigationItem::make('Dashboard')
+                    ->icon('heroicon-o-arrow-left')
+                    ->url(fn() => url('/dashboard'))
+            ])
             ->resourceCreatePageRedirect('index')
             ->middleware([
                 EncryptCookies::class,
@@ -59,7 +61,8 @@ class EventPanelPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                SetCurrentEvent::class
+            ])->tenantMiddleware([
+                ApplyEventThemeColors::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

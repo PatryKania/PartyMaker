@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\EventPanel\Resources\Guests\Schemas;
+namespace App\Filament\EventPanel\Resources\Participants\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 
-class GuestForm
+class ParticipantForm
 {
     public static function configure(Schema $schema): Schema
     {
