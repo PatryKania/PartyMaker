@@ -1,0 +1,21 @@
+/* CTA WIDGET - START*/
+.cta-widget-heading {
+    font-size: 30px;
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+.cta-widget-txt {
+    font-size: 18px;
+    font-weight: 300;
+    padding-bottom: 20px;
+}
+
+.cta-widget-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+/* CTA WIDGET - END */
