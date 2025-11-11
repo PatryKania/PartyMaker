@@ -8,7 +8,7 @@ use App\Models\Participant;
 
 class Event extends Model
 {
-    protected $fillable = ['name', 'date', 'type'];
+    protected $fillable = ['name', 'date', 'type', 'color'];
 
     public function participants()
     {

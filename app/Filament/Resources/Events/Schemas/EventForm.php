@@ -6,7 +6,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
-
+use Filament\Forms\Components\ColorPicker;
 
 
 class EventForm
@@ -22,7 +22,8 @@ class EventForm
                         'wedding' => 'Wedding',
                         'birthday' => 'Birthday',
                         'christening' => 'Christening',
-                    ])->native(false)
+                    ])->native(false),
+                ColorPicker::make('color')
             ]);
     }
 }
