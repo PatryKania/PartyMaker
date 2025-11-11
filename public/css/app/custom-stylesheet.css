@@ -19,3 +19,10 @@
 }
 
 /* CTA WIDGET - END */
+
+/* HIDE TENANT MENU - START */
+.fi-tenant-menu {
+    display: none !important;
+}
+
+/* HIDE TENANT MENU - END */

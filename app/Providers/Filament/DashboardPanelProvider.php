@@ -14,14 +14,14 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -62,6 +62,20 @@ class DashboardPanelProvider extends PanelProvider
             ->resourceCreatePageRedirect('index')
             ->authMiddleware([
                 Authenticate::class,
-            ])->topNavigation();
+            ])->topNavigation()->renderHook(
+                PanelsRenderHook::USER_MENU_BEFORE,
+                fn(): string => Blade::render('
+                    <x-filament::button
+                        color="primary"
+                        tag="a"
+                        size="xl"
+                        href="' . route('filament.dashboard.resources.events.create') . '"
+                        class="cta-widget-btn ml-6" outlined
+                    >
+                        Create event
+                    </x-filament::button>
+                ')
+
+            );
     }
 }

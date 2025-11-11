@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->string('phone')->nullable();
-            $table->enum('role', ['organizer', 'guest']);
-            $table->enum('type', ['adult', 'child']);
+            $table->enum('role', ['organizer', 'guest'])->default('guest');
+            $table->enum('type', ['adult', 'child'])->default('adult');
             $table->enum('status', ['new', 'pending', 'confirmed', 'cancelled'])->default('new');
             $table->timestamps();
         });
