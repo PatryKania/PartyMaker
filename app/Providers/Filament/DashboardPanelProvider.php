@@ -22,11 +22,28 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Blade;
+use Filament\Support\Facades\FilamentColor;
 
 class DashboardPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        FilamentColor::register([
+            'primary' => [
+                50 => 'oklch(0.9694 0.0169 50.44)',
+                100 => 'oklch(0.8746 0.066 54.77)',
+                200 => 'oklch(0.778 0.0662 54.31)',
+                300 => 'oklch(0.6806 0.0656 54.4)',
+                400 => 'oklch(0.5843 0.0662 53.76)',
+                500 => 'oklch(0.4888 0.0696 54.06)',
+                600 => 'oklch(0.4335 0.095 53.84)',
+                700 => 'oklch(0.358 0.0891 54.53)',
+                800 => 'oklch(0.279 0.0698 54.09)',
+                900 => 'oklch(0.2095 0.0526 53.89)',
+                950 => 'oklch(0.2095 0.0526 53.89)',
+            ],
+        ]);
+
         return $panel
             ->default()
             ->id('dashboard')
@@ -34,9 +51,6 @@ class DashboardPanelProvider extends PanelProvider
             ->brandName('PartyMaker')
             ->login()
             ->registration()
-            ->colors([
-                'primary' => Color::Amber,
-            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
