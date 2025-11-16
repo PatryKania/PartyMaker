@@ -33,3 +33,109 @@
 }
 
 /* BACKGROUND COLOR - END */
+
+/* AUTH - START */
+.social-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 6);
+    width: 100%;
+    padding-top: calc(var(--spacing) * 8);
+}
+
+.fb-btn {
+    background: #1877F2;
+    color: white;
+}
+
+body:has(.social-wrapper) .fi-logo {
+    display: none;
+}
+
+.btn-link {
+    text-decoration: underline;
+    color: var(--gray-950);
+    display: flex;
+}
+
+.fi-sc-text:has(.btn-forget) {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing) * 4);
+}
+
+.divider:after,
+.divider:before {
+    content: "";
+    display: flex;
+    height: 1px;
+    width: 30%;
+    background: var(--gray-950);
+}
+
+.register-info {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing);
+}
+
+.custom-auth-wrapper {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.custom-auth-wrapper .auth-column {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.custom-auth-wrapper .auth-right {
+    align-items: flex-start;
+}
+
+.custom-auth-wrapper .auth-left .fi-simple-page-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.custom-auth-wrapper .auth-right {
+    background-image: url(/images/bg-login.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.auth-column-content {
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+    padding: 0 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-column-content .title {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.auth-column-content .sub-title {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.auth-column-conten .text-bold {
+    font-weight: 600;
+}
+
+/* AUTH - END */

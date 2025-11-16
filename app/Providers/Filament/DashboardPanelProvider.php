@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Helper\CustomLogin;
+use App\Filament\Helper\CustomRegister;
 use App\Filament\Widgets\EventCreateWidget;
 use App\Filament\Widgets\FakeEventStats;
 use App\Filament\Widgets\FakeStats;
@@ -13,7 +15,6 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -49,8 +50,8 @@ class DashboardPanelProvider extends PanelProvider
             ->id('dashboard')
             ->path('dashboard')
             ->brandName('PartyMaker')
-            ->login()
-            ->registration()
+            ->login(CustomLogin::class)
+            ->registration(CustomRegister::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
