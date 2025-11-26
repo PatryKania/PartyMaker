@@ -139,3 +139,86 @@ body:has(.social-wrapper) .fi-logo {
 }
 
 /* AUTH - END */
+
+/* MEMORIES - START */
+.custom-section {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--spacing) * 8);
+}
+
+.memories-table .fi-ta-image img {
+    aspect-ratio: 4 / 3;
+    width: 33.33%;
+    height: auto !important;
+    object-fit: contain;
+}
+
+.memories-table .fi-ta-image {
+    display: flex;
+    gap: 14px;
+}
+
+.memories-table .fi-ta-record-content>.fi-grid-col {
+    background: #FAFAFA;
+    border-radius: 12px;
+    padding: 14px;
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a);
+    --tw-ring-shadow: var(--tw-ring-inset, ) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    --tw-ring-color:
+        color-mix(in oklab, var(--gray-950) 5%, transparent);
+}
+
+.memories-table .fi-ta-record-content .fi-ta-text-item.fi-ta-text {
+    font-weight: 600;
+}
+
+.memories-table .fi-ta-header-ctn {
+    height: 49px;
+    background: #FAFAFA;
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+    border-color: var(--gray-200);
+    display: flex !important;
+}
+
+/* slider */
+.memory-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.memory-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.memory-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.memory-slide {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    height: 500px;
+    scroll-snap-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.memory-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+/* slider */
+/* MEMORIES - END */

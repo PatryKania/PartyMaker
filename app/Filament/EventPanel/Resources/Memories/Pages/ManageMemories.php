@@ -10,11 +10,17 @@ use Filament\Resources\Pages\Page;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use App\Filament\EventPanel\Resources\Memories\Schemas\MemoryForm;
 use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
+use Filament\Actions\ViewAction;
+
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 
 class ManageMemories extends Page implements HasTable, HasForms
 {
@@ -23,6 +29,7 @@ class ManageMemories extends Page implements HasTable, HasForms
 
     protected static string $resource = MemoryResource::class;
     protected string $view = 'filament.event-panel.resources.memories.pages.manage-memories';
+    protected static ?string $title = 'Create memories';
 
     public ?array $data = [];
 
@@ -31,14 +38,64 @@ class ManageMemories extends Page implements HasTable, HasForms
         return $table
             ->query(Memory::query()->latest())
             ->columns([
-                TextColumn::make('desc')->label('Opis'),
+                Split::make([
+                    Stack::make([
+                        ImageColumn::make('images')
+                            ->label('Zdjęcia')
+                            ->disk('public')
+                            ->getStateUsing(
+                                fn($record) =>
+                                $record->memoryMedia
+                                    ->where('type', 'image')
+                                    ->pluck('path')
+                                    ->toArray()
+                            )
+                            ->stacked()
+                            ->limit(3),
+                        TextColumn::make('desc')->label('Opis'),
+                    ])
+                ])
+
             ])
             ->filters([
                 //
+            ])->actions([
+                ViewAction::make()
+                    ->label('Podgląd')
+                    ->icon(null)
+                    ->label('')
+                    ->modalContent(fn($record) => new HtmlString(Blade::render(<<<'BLADE'
+        <div class="memory-wrapper">
+            {{-- Slider --}}
+            <div class="memory-slider">
+             @foreach($record->memoryMedia as $media)
+                    <div class="memory-slide">
+                        
+                        @if($media->type === 'image')
+                            <img src="{{ Storage::disk('public')->url($media->path) }}" alt="Zdjęcie">
+                        
+                        @elseif($media->type === 'video')
+                            <video controls playsinline>
+                                <source src="{{ Storage::disk('public')->url($media->path) }}" type="video/mp4">
+                                Twój nie obsługuje elementu wideo.
+                            </video>
+                        @endif
+
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- Opis --}}
+            @if($record->desc)
+                <div class="memory-desc">
+                    {{ $record->desc }}
+                </div>
+            @endif
+        </div>
+    BLADE, ['record' => $record])))
             ])
-            ->recordActions([
-                EditAction::make(),
-            ])
+            ->recordAction('view')
+            ->recordActions([])
             ->toolbarActions([]);
     }
 
@@ -61,6 +118,21 @@ class ManageMemories extends Page implements HasTable, HasForms
         $data['event_id'] = filament()->getTenant()->id;
         $memory = Memory::create($data);
 
+        if (!empty($data['images'])) {
+            foreach ($data['images'] as $image) {
+                $memory->memoryMedia()->create([
+                    'type' => 'image',
+                    'path' => $image,
+                ]);
+            }
+        }
+
+        if (!empty($data['video'])) {
+            $memory->memoryMedia()->create([
+                'type' => 'video',
+                'path' => $data['video'],
+            ]);
+        }
         $this->form->fill([]);
 
         Notification::make()
