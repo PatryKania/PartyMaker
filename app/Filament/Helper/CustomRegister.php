@@ -20,13 +20,13 @@ class CustomRegister extends Register
         $html = '
         <div class="social-wrapper">
 
-            <a href="/auth/redirect/google"
+          <a href="/auth/google/redirect"
                class="social-btn google-btn fi-btn fi-size-md  fi-ac-btn-action" />
                <img src="/svg/google_logo.svg"/>
                 <span>Sign up with Google</span>
             </a>
 
-            <a href="/auth/redirect/facebook"
+            <a href="/auth/facebook/redirect"
                class="social-btn fb-btn fi-btn fi-size-md  fi-ac-btn-action">
                  <img src="/svg/fb_logo.svg"/>
                 <span>Sign up with Facebook</span>

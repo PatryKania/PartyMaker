@@ -202,7 +202,6 @@ body:has(.social-wrapper) .fi-logo {
     scrollbar-width: none;
 }
 
-
 .memory-slide {
     flex: 0 0 auto;
     width: auto;
@@ -211,7 +210,6 @@ body:has(.social-wrapper) .fi-logo {
     scroll-snap-align: center;
     border-radius: 8px;
     overflow: hidden;
-    /* border: 1px solid #e5e7eb; */
     position: relative;
 }
 
