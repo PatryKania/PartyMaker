@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleLoginController;
+use App\Http\Controllers\Auth\FacebookLoginController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,3 +14,11 @@ Route::get('/auth/google/redirect', [GoogleLoginController::class, 'redirectToGo
     ->name('auth.google');
 
 Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
+
+
+
+// Facebook Login
+Route::get('/auth/facebook/redirect', [FacebookLoginController::class, 'redirectToFacebook'])
+    ->name('auth.facebook');
+
+Route::get('/auth/facebook/callback', [FacebookLoginController::class, 'handleFacebookCallback']);
