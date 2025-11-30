@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\EventType;
 
 return new class extends Migration
 {
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('date');
-            $table->enum('type', ['wedding', 'birthday', 'christening']);
+            $table->enum('type', array_column(EventType::cases(), 'value'));
             $table->strding('color');
             $table->timestamps();
         });
