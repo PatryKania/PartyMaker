@@ -21,7 +21,7 @@ class CustomLogin extends Login
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
                 // $this->getRememberFormComponent(),
-                Text::make(new HtmlString('<a href="" class="btn-forget btn-link" >Forgot your password?</a>'))
+                Text::make(new HtmlString('<a href="" class="btn-forget btn-link" >' . __('Forgot your password?') . '</a>'))
             ]);
     }
 
@@ -33,15 +33,15 @@ class CustomLogin extends Login
             <a href="/auth/google/redirect"
                class="social-btn google-btn fi-btn fi-size-md  fi-ac-btn-action" />
                <img src="/svg/google_logo.svg"/>
-                <span>Sign in with Google</span>
+                <span>' . __('Sign in with Google') . '</span>
             </a>
 
             <a href="/auth/facebook/redirect"
                class="social-btn fb-btn fi-btn fi-size-md  fi-ac-btn-action">
                <img src="/svg/fb_logo.svg"/>
-                <span>Sign in with Facebook</span>
+                <span>' . __('Sign in with Facebook') . '</span>
             </a>
-        <div class="divider">or</div>
+        <div class="divider">' . __('or') . '</div>
         </div>
     ';
 
@@ -50,7 +50,7 @@ class CustomLogin extends Login
 
     public function getRegisterPageRedirectComponent(): Htmlable | null
     {
-        $html = '<div class="register-info">Don’t have an account yet?' . ' ' . ' <a class="btn-link" href=' . $this->registerAction->getUrl() . '>Register here.</a></div>';
+        $html = '<div class="register-info">' . __('Don’t have an account yet?') . ' ' . ' <a class="btn-link" href=' . $this->registerAction->getUrl() . '>' . __('Register here') . '.</a></div>';
         return new HtmlString($html);
     }
 
@@ -59,6 +59,7 @@ class CustomLogin extends Login
         return $schema
             ->components([
                 RenderHook::make(PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE),
+                // RenderHook::make(PanelsRenderHook::GLOBAL_SEARCH_BEFORE),
                 $this->getFormContentComponent(),
                 $this->getMultiFactorChallengeFormContentComponent(),
                 $this->getRegisterPageRedirectComponent(),

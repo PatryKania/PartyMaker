@@ -138,6 +138,15 @@ body:has(.social-wrapper) .fi-logo {
     font-weight: 600;
 }
 
+
+/* Custom lang switcher - START*/
+body:has(.custom-auth-wrapper) .fi-dropdown:has(.language-switch-trigger) {
+    position: fixed;
+    top: 32px;
+    right: calc(50vw + 32px);
+}
+
+/* Custom lang switcher - END */
 /* AUTH - END */
 
 /* MEMORIES - START */

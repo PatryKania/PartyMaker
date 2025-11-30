@@ -7,6 +7,7 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
                 ->locales(['en', 'pl'])->flags([
                     'en' => asset('svg/flags/gb.svg'),
                     'pl' => asset('svg/flags/pl.svg'),
-                ])->flagsOnly();
+                ])->flagsOnly()->visible(outsidePanels: true);
         });
     }
 }

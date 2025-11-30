@@ -20,18 +20,18 @@ class CustomRegister extends Register
         $html = '
         <div class="social-wrapper">
 
-          <a href="/auth/google/redirect"
+            <a href="/auth/google/redirect"
                class="social-btn google-btn fi-btn fi-size-md  fi-ac-btn-action" />
                <img src="/svg/google_logo.svg"/>
-                <span>Sign up with Google</span>
+                <span>' . __('Sign in with Google') . '</span>
             </a>
 
             <a href="/auth/facebook/redirect"
                class="social-btn fb-btn fi-btn fi-size-md  fi-ac-btn-action">
-                 <img src="/svg/fb_logo.svg"/>
-                <span>Sign up with Facebook</span>
+               <img src="/svg/fb_logo.svg"/>
+                <span>' . __('Sign in with Facebook') . '</span>
             </a>
-        <div class="divider">or</div>
+        <div class="divider">' . __('or') . '</div>
         </div>
     ';
 
@@ -40,7 +40,7 @@ class CustomRegister extends Register
 
     public function getLoginPageRedirectComponent(): Htmlable | null
     {
-        $html = '<div class="register-info">Already have an account?' . ' ' . ' <a class="btn-link" href=' . $this->loginAction->getUrl() . '>Log in here.</a></div>';
+        $html = '<div class="register-info">' . __('Already have an account?') . '' . ' ' . ' <a class="btn-link" href=' . $this->loginAction->getUrl() . '>' . __('Log in here') . '.</a></div>';
         return new HtmlString($html);
     }
 
