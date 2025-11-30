@@ -138,6 +138,15 @@ body:has(.social-wrapper) .fi-logo {
     font-weight: 600;
 }
 
+
+/* Custom lang switcher - START*/
+body:has(.custom-auth-wrapper) .fi-dropdown:has(.language-switch-trigger) {
+    position: fixed;
+    top: 32px;
+    right: calc(50vw + 32px);
+}
+
+/* Custom lang switcher - END */
 /* AUTH - END */
 
 /* MEMORIES - START */
@@ -222,3 +231,23 @@ body:has(.social-wrapper) .fi-logo {
 
 /* slider */
 /* MEMORIES - END */
+
+
+/* LANG SWITCHER - START */
+
+.language-switch-trigger img,
+.fls-flag-only-width img {
+    width: 32px;
+    border-radius: 4px;
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a);
+    --tw-ring-shadow: var(--tw-ring-inset, ) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    --tw-ring-color:
+        color-mix(in oklab, var(--gray-950) 5%, transparent);
+}
+
+.fls-flag-only-width {
+    width: fit-content !important;
+}
+
+/* LANG SWITCHER - END */
