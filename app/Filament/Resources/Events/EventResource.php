@@ -46,4 +46,18 @@ class EventResource extends Resource
             'edit' => EditEvent::route('/{record}/edit'),
         ];
     }
+
+    // public static function getNavigationLabel(): string
+    // {
+    //     return __('Events');
+    // }
+    public static function getModelLabel(): string
+    {
+        return __('Event');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Events');
+    }
 }

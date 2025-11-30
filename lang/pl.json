@@ -238,5 +238,11 @@
     "Birthday": "Urodziny",
     "Christening": "Chrzciny",
     "User type": "Typ użytkownika",
-    "Event type": "Typ wydarzenia"
+    "Event type": "Typ wydarzenia",
+    "Events": "Wydarzenia",
+    "Event": "Wydarzene",
+    "Name": "Nazwa",
+    "Date": "Data",
+    "Type": "Typ",
+    "Color": "Kolor"
 }

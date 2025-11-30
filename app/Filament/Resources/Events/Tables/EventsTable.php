@@ -15,9 +15,9 @@ class EventsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('date')->sortable()->searchable()->date('d.m.Y'),
-                TextColumn::make('type')->sortable(),
+                TextColumn::make('name')->label(__('Name'))->sortable()->searchable(),
+                TextColumn::make('date')->label(__('Date'))->sortable()->searchable()->date('d.m.Y'),
+                TextColumn::make('type')->label(__('Typ'))->sortable(),
             ])
             ->filters([
                 //

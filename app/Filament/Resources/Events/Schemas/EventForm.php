@@ -15,15 +15,15 @@ class EventForm
     {
         return $schema
             ->components([
-                TextInput::make('name')->required()->unique(),
-                DatePicker::make('date')->required()->date()->afterOrEqual(today())->native(false),
-                Select::make('type')->required()
+                TextInput::make('name')->label(__('Name'))->required()->unique(),
+                DatePicker::make('date')->label(__('Date'))->required()->date()->afterOrEqual(today())->native(false),
+                Select::make('type')->label(__('Type'))->required()
                     ->options([
                         'wedding' => 'Wedding',
                         'birthday' => 'Birthday',
                         'christening' => 'Christening',
                     ])->native(false),
-                ColorPicker::make('color')
+                ColorPicker::make('color')->label(__('Color'))
             ]);
     }
 }
