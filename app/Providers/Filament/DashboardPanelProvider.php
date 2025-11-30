@@ -87,7 +87,7 @@ class DashboardPanelProvider extends PanelProvider
                         href="' . route('filament.dashboard.resources.events.create') . '"
                         class="cta-widget-btn ml-6" outlined
                     >
-                        Create event
+                       ' . __('Create event') . '
                     </x-filament::button>
                 ')
 
