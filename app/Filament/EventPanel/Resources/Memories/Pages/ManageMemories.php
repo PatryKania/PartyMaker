@@ -142,4 +142,9 @@ class ManageMemories extends Page implements HasTable, HasForms
 
         $this->dispatch('refresh');
     }
+
+    public function getTitle(): string
+    {
+        return __('Create memories');
+    }
 }

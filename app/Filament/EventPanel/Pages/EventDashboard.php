@@ -13,4 +13,14 @@ class EventDashboard extends Page
     protected static ?string $title = 'Event';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
+
+    public function getTitle(): string
+    {
+        return __('Event');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Event');
+    }
 }

@@ -47,10 +47,7 @@ class EventResource extends Resource
         ];
     }
 
-    // public static function getNavigationLabel(): string
-    // {
-    //     return __('Events');
-    // }
+
     public static function getModelLabel(): string
     {
         return __('Event');

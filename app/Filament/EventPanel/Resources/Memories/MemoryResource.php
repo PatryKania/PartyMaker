@@ -48,4 +48,14 @@ class MemoryResource extends Resource
 
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Memory');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Memories');
+    }
 }

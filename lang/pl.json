@@ -245,5 +245,16 @@
     "Date": "Data",
     "Type": "Typ",
     "Color": "Kolor",
-    "Company event": "Wydarzene firmowe"
+    "Company event": "Wydarzene firmowe",
+    "Dashboard": "Panel",
+    "Memory": "Wspomnienie",
+    "Memories": "Wspomnienia",
+    "Participant": "Uczestnik",
+    "Participants": "Uczestnicy",
+    "Create memories": "Utwórz Wspomnienia",
+    "Last memories": "Ostatnie Wspomnienia",
+    "Create memory": "Dodaj wspomnienie",
+    "Images": "Zdjęcia",
+    "Video": "Wideo",
+    "Description": "Opsi"
 }

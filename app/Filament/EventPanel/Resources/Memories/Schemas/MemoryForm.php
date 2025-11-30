@@ -7,6 +7,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\FileUpload;
 
 use Filament\Schemas\Components\Grid;
+use PhpParser\Node\Stmt\Label;
 
 class MemoryForm
 {
@@ -17,7 +18,7 @@ class MemoryForm
             ->schema([
                 Grid::make(2)
                     ->schema([
-                        FileUpload::make('images')
+                        FileUpload::make('images')->label(__('Images'))
                             ->image()
                             ->imageEditor()
                             ->multiple()->disk('public')
@@ -25,14 +26,14 @@ class MemoryForm
                             ->visibility('public')
                             ->moveFiles(),
 
-                        FileUpload::make('video')
+                        FileUpload::make('video')->label(__('Video'))
                             ->directory('memories/videos')
                             ->visibility('public')
                             ->disk('public')
                             ->maxSize(10000)
                             ->acceptedFileTypes(['video/mp4']),
 
-                        TextInput::make('desc')
+                        TextInput::make('desc')->label(__('Description'))
                             ->required(),
                     ]),
 

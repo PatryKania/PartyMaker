@@ -46,7 +46,7 @@ class EventPanelPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/EventPanel/Widgets'), for: 'App\Filament\EventPanel\Widgets')
             ->widgets([])
             ->navigationItems([
-                NavigationItem::make('Dashboard')
+                NavigationItem::make('Dashboard')->label(fn(): string => __('Dashboard'))
                     ->icon('heroicon-o-arrow-left')
                     ->url(fn() => url('/dashboard'))
             ])

@@ -45,4 +45,14 @@ class ParticipantResource extends Resource
             'edit' => EditParticipant::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Participant');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Participants');
+    }
 }
