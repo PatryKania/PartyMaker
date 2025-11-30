@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Event;
 use App\Models\User;
+use App\Enums\ParticipantRole;
+use App\Enums\ParticipantStatus;
+use App\Enums\ParticipantType;
 
 class Participant extends Model
 {
@@ -18,6 +21,12 @@ class Participant extends Model
         'role',
         'type',
         'status',
+    ];
+
+    protected $casts = [
+        'role' => ParticipantRole::class,
+        'status' => ParticipantStatus::class,
+        'type' => ParticipantType::class,
     ];
 
     public function event()

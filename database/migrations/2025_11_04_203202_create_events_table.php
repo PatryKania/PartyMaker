@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('date');
             $table->enum('type', array_column(EventType::cases(), 'value'));
-            $table->strding('color');
+            $table->string('color');
             $table->timestamps();
         });
     }

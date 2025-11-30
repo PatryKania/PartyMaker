@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\ParticipantStatus;
+use App\Enums\ParticipantRole;
+use App\Enums\ParticipantType;
 
 return new class extends Migration
 {
@@ -19,9 +22,9 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->string('phone')->nullable();
-            $table->enum('role', ['organizer', 'guest'])->default('guest');
-            $table->enum('type', ['adult', 'child'])->default('adult');
-            $table->enum('status', ['new', 'pending', 'confirmed', 'cancelled'])->default('new');
+            $table->enum('role', array_column(ParticipantRole::cases(), 'value'))->default('guest');
+            $table->enum('type', array_column(ParticipantType::cases(), 'value'))->default('adult');
+            $table->enum('status', array_column(ParticipantStatus::cases(), 'value'))->default('new');
             $table->timestamps();
         });
     }

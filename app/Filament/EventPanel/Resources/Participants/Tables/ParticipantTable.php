@@ -16,9 +16,11 @@ class ParticipantsTable
     {
         return $table
             ->columns([
-                TextColumn::make('first_name')->sortable()->searchable(),
-                TextColumn::make('role')->sortable()->searchable(),
-                TextColumn::make('status')->sortable()->searchable(),
+                TextColumn::make('first_name')->label(__('First name'))->sortable()->searchable(),
+                TextColumn::make('last_name')->label(__('Last name'))->sortable()->searchable(),
+                TextColumn::make('type')->label(__('Type'))->sortable()->searchable(),
+                TextColumn::make('role')->label(__('Role'))->sortable()->searchable(),
+                TextColumn::make('status')->label(__('Status'))->sortable()->searchable(),
             ])
             ->filters([
                 //
