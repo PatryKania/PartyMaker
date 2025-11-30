@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
+use Illuminate\Contracts\Support\Htmlable;
 
 class FakeEventStats extends ChartWidget
 {
@@ -14,18 +15,23 @@ class FakeEventStats extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Event type',
+                    'label' => __('Event type'),
                     'data' => [14, 20, 5],
                     'backgroundColor' => ['#36A2EB', '#b227b2ff', '#5ecfabff'],
                     'borderColor' => '#9BD0F5',
                 ],
             ],
-            'labels' => ['Wedding', 'Birthday', 'Christening'],
+            'labels' => [__('Wedding'), __('Birthday'), __('Christening')],
         ];
     }
 
     protected function getType(): string
     {
         return 'pie';
+    }
+
+    public function getHeading(): ?string
+    {
+        return __('Event type');
     }
 }

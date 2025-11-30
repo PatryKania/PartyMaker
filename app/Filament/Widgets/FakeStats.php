@@ -10,9 +10,9 @@ class FakeStats extends StatsOverviewWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Registered users:', '487'),
-            Stat::make('Events created', '39'),
-            Stat::make('Positive reviews', '94%'),
+            Stat::make(__('Registered users:'), '487'),
+            Stat::make(__('Events created'), '39'),
+            Stat::make(__('Positive reviews'), '94%'),
         ];
     }
 }

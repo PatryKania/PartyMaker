@@ -2,10 +2,10 @@
     <x-filament::section>
         <div class="cta-widget-wrapper">
             <h2 class="cta-widget-heading">
-                Ready to host your next great event?
+                {{ __('Ready to host your next great event?') }}
             </h2>
             <p class="cta-widget-txt">
-                Inspire your audience and bring people together - start creating your event today!
+                {{ __('Inspire your audience and bring people together - start creating your event today!') }}
             </p>
             <x-filament::button
                 color="primary"
@@ -13,7 +13,7 @@
                 size="xl"
                 href="{{ route('filament.dashboard.resources.events.create') }}"
                 class="cta-widget-btn">
-                Start create
+                {{ __('Start create') }}
             </x-filament::button>
         </div>
     </x-filament::section>
