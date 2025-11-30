@@ -4,11 +4,14 @@ namespace App\Filament\Helper;
 
 use Filament\Auth\Pages\Register;
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Text;
 use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\RenderHook;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Support\Htmlable;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Hash;
+use Filament\Schemas\Components\Component;
 
 class CustomRegister extends Register
 {
@@ -53,5 +56,28 @@ class CustomRegister extends Register
                 $this->getLoginPageRedirectComponent(),
                 RenderHook::make(PanelsRenderHook::AUTH_REGISTER_FORM_AFTER),
             ]);
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                $this->getNameFormComponent(),
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+            ]);
+    }
+
+    protected function getPasswordFormComponent(): Component
+    {
+        return TextInput::make('password')
+            ->label(__('filament-panels::auth/pages/register.form.password.label'))
+            ->password()
+            ->revealable(filament()->arePasswordsRevealable())
+            ->required()
+            ->rule(Password::default())
+            ->showAllValidationMessages()
+            ->dehydrateStateUsing(fn($state) => Hash::make($state))
+            ->validationAttribute(__('filament-panels::auth/pages/register.form.password.validation_attribute'));
     }
 }
