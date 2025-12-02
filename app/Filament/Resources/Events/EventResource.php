@@ -13,7 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class EventResource extends Resource
 {
@@ -56,5 +56,15 @@ class EventResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('Events');
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->whereIn('id', function ($query) {
+                $query->select('event_id')
+                    ->from('participants')
+                    ->where('email', auth()->user()->email);
+            });
     }
 }

@@ -52,27 +52,25 @@ class User extends Authenticatable implements HasTenants
         ];
     }
 
-    public function events()
+    public function events(): BelongsToMany
     {
-        return $this->hasManyThrough(
+        return $this->belongsToMany(
             Event::class,
-            Participant::class,
-            'user_id',
-            'id',
-            'id',
-            'event_id'
+            'participants',
+            'email',
+            'event_id',
+            'email',
+            'id'
         );
     }
 
     public function getTenants(Panel $panel): Collection
     {
-        return $this->events()->get();
+        return $this->events;
     }
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return $tenant->participants()
-            ->where('user_id', $this->id)
-            ->exists();
+        return $this->events()->whereKey($tenant)->exists();
     }
 }
