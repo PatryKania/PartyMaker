@@ -50,6 +50,7 @@ class DashboardPanelProvider extends PanelProvider
             ->id('dashboard')
             ->path('dashboard')
             ->brandName('PartyMaker')
+            ->darkMode(false)
             ->login(CustomLogin::class)
             ->registration(CustomRegister::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')

@@ -1,6 +1,5 @@
 <x-filament-panels::layout.base>
     <div class="custom-auth-wrapper">
-
         <div class="auth-left auth-column">
             {{ $slot }}
         </div>
