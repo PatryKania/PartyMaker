@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Facades\Filament;
+use App\Enums\ParticipantRole;
 
 class User extends Authenticatable implements HasTenants
 {
@@ -61,7 +63,7 @@ class User extends Authenticatable implements HasTenants
             'event_id',
             'email',
             'id'
-        );
+        )->withPivot('role');
     }
 
     public function getTenants(Panel $panel): Collection
@@ -72,5 +74,19 @@ class User extends Authenticatable implements HasTenants
     public function canAccessTenant(Model $tenant): bool
     {
         return $this->events()->whereKey($tenant)->exists();
+    }
+
+    public function isOrganizer(): bool
+    {
+        $currentEvent = Filament::getTenant();
+
+        if (!$currentEvent) {
+            return false;
+        }
+
+        return $this->events()
+            ->where('events.id', $currentEvent->id)
+            ->wherePivot('role', ParticipantRole::Organizer)
+            ->exists();
     }
 }
