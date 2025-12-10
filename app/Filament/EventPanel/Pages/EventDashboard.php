@@ -2,25 +2,34 @@
 
 namespace App\Filament\EventPanel\Pages;
 
-use Filament\Pages\Page;
+use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;
+use App\Filament\EventPanel\Widgets\QrCodeWidget;
+use Filament\Facades\Filament;
+use Filament\Pages\Dashboard;
 
-class EventDashboard extends Page
+class EventDashboard extends Dashboard
 {
-    protected string $view = 'filament.event-panel.pages.event-dashboard';
-
     protected static ?string $title = 'Event';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
-    public function getTitle(): string
+    public static function getNavigationLabel(): string
     {
         return __('Event');
     }
 
-    public static function getNavigationLabel(): string
+    public function getTitle(): string
     {
-        return __('Event');
+        return Filament::getTenant()->name;
+    }
+
+    public function getWidgets(): array
+    {
+        return [
+            QrCodeWidget::class,
+            QrCodeMemoriesWidget::class
+        ];
     }
 }

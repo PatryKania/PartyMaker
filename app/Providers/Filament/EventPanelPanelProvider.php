@@ -22,6 +22,9 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Http\Middleware\ApplyEventThemeColors;
 use Filament\Actions\Action;
 use App\Filament\EventPanel\Pages\EventDashboard;
+use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
+use App\Filament\Widgets\EventCreateWidget;
+use App\Filament\EventPanel\Widgets\QrCodeWidget;
 use App\Models\Event;
 use Filament\Navigation\NavigationItem;
 
@@ -44,7 +47,10 @@ class EventPanelPanelProvider extends PanelProvider
                 EventDashboard::class
             ])
             ->discoverWidgets(in: app_path('Filament/EventPanel/Widgets'), for: 'App\Filament\EventPanel\Widgets')
-            ->widgets([])
+            ->widgets([
+                QrCodeWidget::class,
+                QrCodeMemoriesWidget::class
+            ])
             ->navigationItems([
                 NavigationItem::make('Dashboard')->label(fn(): string => __('Dashboard'))
                     ->icon('heroicon-o-arrow-left')

@@ -251,3 +251,15 @@ body:has(.custom-auth-wrapper) .fi-dropdown:has(.language-switch-trigger) {
 }
 
 /* LANG SWITCHER - END */
+
+/* QR CODE - START */
+.qr-code-wrapper svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.qr-code-wrapper {
+    margin-bottom: 20px;
+}
+
+/* QR CODE - END */

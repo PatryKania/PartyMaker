@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\FacebookLoginController;
+use App\Http\Controllers\QrPdfController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -22,3 +23,6 @@ Route::get('/auth/facebook/redirect', [FacebookLoginController::class, 'redirect
     ->name('auth.facebook');
 
 Route::get('/auth/facebook/callback', [FacebookLoginController::class, 'handleFacebookCallback']);
+
+// Download QR code
+Route::get('/qr-pdf', [QrPdfController::class, 'generate'])->name('qr.pdf');
