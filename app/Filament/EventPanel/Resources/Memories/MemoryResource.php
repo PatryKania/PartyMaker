@@ -21,6 +21,8 @@ class MemoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Schema $schema): Schema
     {
         return MemoryForm::configure($schema);
@@ -42,7 +44,6 @@ class MemoryResource extends Resource
     {
         return [
             'index' => ManageMemories::route('/'),
-            // 'index' => ListMemories::route('/'),
             'create' => CreateMemory::route('/create'),
             'edit' => EditMemory::route('/{record}/edit'),
 
