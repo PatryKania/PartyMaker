@@ -19,7 +19,7 @@ class MemoryResource extends Resource
 {
     protected static ?string $model = Memory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 
     protected static ?int $navigationSort = 2;
 

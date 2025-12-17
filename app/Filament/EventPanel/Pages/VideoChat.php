@@ -18,4 +18,9 @@ class VideoChat extends Page
     {
         return auth()->user()->isOrganizer();
     }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Conference Room');
+    }
 }
