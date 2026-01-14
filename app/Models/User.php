@@ -89,9 +89,4 @@ class User extends Authenticatable implements HasTenants
             ->wherePivot('role', ParticipantRole::Organizer)
             ->exists();
     }
-
-    public function tasks(): BelongsToMany
-    {
-        return $this->belongsToMany(Task::class);
-    }
 }

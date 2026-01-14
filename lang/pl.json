@@ -297,5 +297,8 @@
     "Task": "Zadanie",
     "Tasks": "Zadania",
     "Create task": "Utwórz zadanie",
-    "Conference Room": "Sala konferencyjna"
+    "Conference Room": "Sala konferencyjna",
+    "Organizers": "Organizatorzy",
+    "Mark as completed": "Oznacz jako zakończone",
+    "Mark as incomplered": "Oznacz jako niezrobione"
 }

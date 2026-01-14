@@ -19,8 +19,8 @@ class Task extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function users(): BelongsToMany
+    public function participants()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Participant::class);
     }
 }
