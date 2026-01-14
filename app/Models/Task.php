@@ -21,6 +21,6 @@ class Task extends Model
 
     public function participants()
     {
-        return $this->belongsToMany(Participant::class);
+        return $this->belongsToMany(Participant::class, 'participant_task');
     }
 }

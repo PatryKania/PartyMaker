@@ -14,6 +14,7 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Facades\Filament;
 use App\Enums\ParticipantRole;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements HasTenants
 {
@@ -52,6 +53,16 @@ class User extends Authenticatable implements HasTenants
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (User $user) {
+            DB::table('participants')
+                ->where('email', $user->email)
+                ->whereNull('user_id')
+                ->update(['user_id' => $user->id]);
+        });
     }
 
     public function events(): BelongsToMany

@@ -57,6 +57,7 @@ class EventPanelPanelProvider extends PanelProvider
                     ->url(fn() => url('/dashboard'))
             ])
             ->resourceCreatePageRedirect('index')
+            ->databaseNotifications()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

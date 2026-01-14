@@ -76,10 +76,11 @@ class DashboardPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->resourceCreatePageRedirect('index')
+            ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
             ])->topNavigation()->renderHook(
-                PanelsRenderHook::USER_MENU_BEFORE,
+                PanelsRenderHook::GLOBAL_SEARCH_AFTER,
                 fn(): string => Blade::render('
                     <x-filament::button
                         color="primary"
@@ -91,7 +92,6 @@ class DashboardPanelProvider extends PanelProvider
                        ' . __('Create event') . '
                     </x-filament::button>
                 ')
-
             );
     }
 }
