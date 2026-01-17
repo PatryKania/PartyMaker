@@ -6,6 +6,7 @@ use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;
 use App\Filament\EventPanel\Widgets\QrCodeWidget;
+use App\Filament\EventPanel\Widgets\InvitationWidget;
 use Filament\Facades\Filament;
 use Filament\Pages\Dashboard;
 
@@ -29,9 +30,15 @@ class EventDashboard extends Dashboard
 
     public function getWidgets(): array
     {
-        return [
-            QrCodeWidget::class,
-            QrCodeMemoriesWidget::class
-        ];
+        if (auth()->user()->hasPermissions())
+            return [
+                QrCodeWidget::class,
+                QrCodeMemoriesWidget::class
+            ];
+        else {
+            return [
+                InvitationWidget::class,
+            ];
+        }
     }
 }

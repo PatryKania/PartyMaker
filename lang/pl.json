@@ -302,5 +302,12 @@
     "Mark as completed": "Oznacz jako zakończone",
     "Mark as incomplete": "Oznacz jako niezrobione",
     "Schedule": "Harmonogram",
-    "Schedules": "Harmonogramy"
+    "Schedules": "Harmonogramy",
+    "Presence confirmed!": "Obecność potwierdzona!",
+    "Reject": "Odrzuć",
+    "Reject invitation?": "Odrzucić zaproszenie?",
+    "Are you sure you want to reject this invitation?": "Czy na pewno chcesz odrzucić to zaproszenie?",
+    "Yes, reject": "Tak, odrzuć",
+    "Invitation rejected": "Zaproszenie odrzucone",
+    "Presence confirmation for <b>:name</b> on <b>:date</b>": "Potwierdzenie obecności na <b>:name</b> dnia <b>:date</b>"
 }

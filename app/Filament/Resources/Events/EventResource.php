@@ -64,7 +64,11 @@ class EventResource extends Resource
             ->whereIn('id', function ($query) {
                 $query->select('event_id')
                     ->from('participants')
-                    ->where('email', auth()->user()->email);
+                    ->where('email', auth()->user()->email)
+                    ->where(function ($q) {
+                        $q->where('role', 'organizer')
+                            ->orWhereNotIn('status', ['rejected', 'new']);
+                    });
             });
     }
 }

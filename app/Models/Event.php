@@ -23,8 +23,4 @@ class Event extends Model
     {
         return $this->hasMany(Task::class);
     }
-    // public function scheduls()
-    // {
-    //     return $this->hasMany(Schedule::class);
-    // }
 }

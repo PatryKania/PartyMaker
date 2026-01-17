@@ -14,6 +14,7 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Facades\Filament;
 use App\Enums\ParticipantRole;
+use App\Enums\ParticipantStatus;
 use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements HasTenants
@@ -99,5 +100,24 @@ class User extends Authenticatable implements HasTenants
             ->where('events.id', $currentEvent->id)
             ->wherePivot('role', ParticipantRole::Organizer)
             ->exists();
+    }
+
+    public function hasPermissions(): bool
+    {
+        $currentEvent = Filament::getTenant();
+
+        if (!$currentEvent) {
+            return false;
+        }
+
+        $confirmInvitation = $this->events()
+            ->where('events.id', $currentEvent->id)
+            ->wherePivot('status', ParticipantStatus::Confirmed)
+            ->exists();
+        if ($this->isOrganizer() || $confirmInvitation) {
+            return true;
+        }
+
+        return false;
     }
 }

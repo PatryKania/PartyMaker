@@ -20,6 +20,38 @@
 
 /* CTA WIDGET - END */
 
+/* INVITAITON WIDGET - START*/
+.invitation-widget-heading {
+    font-size: 30px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.invitation-widget-txt {
+    font-size: 18px;
+    font-weight: 300;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.invitation-widget-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+.invitation-widget-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* INVITAION WIDGET - END */
+
 /* HIDE TENANT MENU - START */
 .fi-tenant-menu {
     display: none !important;

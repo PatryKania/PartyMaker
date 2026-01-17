@@ -9,7 +9,7 @@ class SchedulePolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermissions();
     }
 
     public function create(User $user): bool

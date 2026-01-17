@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Gift;
+use App\Models\Memory;
 use App\Models\User;
 
-class GiftPolicy
+class MemoryPolicy
 {
     public function viewAny(User $user): bool
     {
@@ -14,13 +14,13 @@ class GiftPolicy
 
     public function create(User $user): bool
     {
-        return $user->isOrganizer();
+        return $user->hasPermissions();
     }
-    public function update(User $user, Gift $gift): bool
+    public function update(User $user, Memory $memory): bool
     {
         return $user->isOrganizer();
     }
-    public function delete(User $user, Gift $gift): bool
+    public function delete(User $user, Memory $memory): bool
     {
         return $user->isOrganizer();
     }
