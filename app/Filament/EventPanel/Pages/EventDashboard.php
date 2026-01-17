@@ -13,7 +13,7 @@ class EventDashboard extends Dashboard
 {
     protected static ?string $title = 'Event';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHome;
 
     protected static ?int $navigationSort = 1;
 
