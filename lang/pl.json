@@ -300,5 +300,7 @@
     "Conference Room": "Sala konferencyjna",
     "Organizers": "Organizatorzy",
     "Mark as completed": "Oznacz jako zakończone",
-    "Mark as incomplered": "Oznacz jako niezrobione"
+    "Mark as incompleted": "Oznacz jako niezrobione",
+    "Schedule": "Harmonogram",
+    "Schedules": "Harmonogramy"
 }

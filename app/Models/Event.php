@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Participant;
 use App\Enums\EventType;
 
+
 class Event extends Model
 {
     protected $fillable = ['name', 'date', 'type', 'color', 'invitation', 'image', 'reminder_1', 'reminder_7', 'reminder_30'];
@@ -22,4 +23,8 @@ class Event extends Model
     {
         return $this->hasMany(Task::class);
     }
+    // public function scheduls()
+    // {
+    //     return $this->hasMany(Schedule::class);
+    // }
 }
