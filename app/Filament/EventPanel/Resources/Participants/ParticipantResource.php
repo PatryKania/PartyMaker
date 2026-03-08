@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ParticipantResource extends Resource
 {
@@ -48,13 +49,35 @@ class ParticipantResource extends Resource
         ];
     }
 
-    public static function getModelLabel(): string
+    public static function getNavigationLabel(): string
     {
-        return __('Participant');
+        return auth()->user()->isOrganizer() 
+            ? __('Participants') 
+            : __('Invitations');
     }
+
 
     public static function getPluralModelLabel(): string
     {
-        return __('Participants');
+        return auth()->user()->isOrganizer() 
+            ? __('Participants') 
+            : __('Invitations');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return auth()->user()->isOrganizer() 
+            ? __('Participant') 
+            : __('Invitation');
+    }
+
+    public static function getEloquentQuery(): Builder
+    {   
+        $query = parent::getEloquentQuery();
+        if (! auth()->user()->isOrganizer()) {
+            return $query->whereReletedParticipant(auth()->user()->email);
+        }
+
+        return $query;
     }
 }

@@ -20,6 +20,7 @@ class SendInvitationsBulkAction
             ->icon('heroicon-o-paper-airplane')
             ->color('success')
             ->requiresConfirmation()
+            ->visible(fn () => auth()->user()->isOrganizer())
             ->action(function (Collection $records) {
                 $sentCount = 0;
 

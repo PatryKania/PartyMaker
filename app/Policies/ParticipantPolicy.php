@@ -9,12 +9,12 @@ class ParticipantPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->isOrganizer();
+        return $user->hasPermissions();//$user->isOrganizer();
     }
 
     public function view(User $user, Participant $participant): bool
     {
-        return $user->isOrganizer();
+        return $user->hasPermissions();//$user->isOrganizer();
     }
 
     public function create(User $user): bool

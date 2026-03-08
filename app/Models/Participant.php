@@ -63,4 +63,25 @@ class Participant extends Model
             'participant_id'
         );
     }
+
+    public function isReletedParticipant(){
+        $user = auth()->user();
+
+        if ($this->email === $user->email) {
+            return true;
+        }
+
+        if ($this->parents()->where('email', $user->email)->exists()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function scopeWhereReletedParticipant($query, $userEmail)
+{
+    return $query->where(function ($subQuery) use ($userEmail) {
+        $subQuery->where('email', $userEmail)
+            ->orWhereHas('parents', fn($q) => $q->where('email', $userEmail));
+    });
+}
 }

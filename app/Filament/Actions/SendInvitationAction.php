@@ -20,7 +20,7 @@ class SendInvitationAction
             ->color('success')
             ->requiresConfirmation()
             ->visible(fn (Participant $record) => 
-                $record->status === ParticipantStatus::New 
+                $record->status === ParticipantStatus::New && auth()->user()->isOrganizer()
             )
             ->action(function (Participant $record) {
                  $record->update(['status' => ParticipantStatus::Pending]);

@@ -315,5 +315,6 @@
     "Invitation sent!": "Zaproszenie zostało wysłane!",
     "Invitations sent successfully!": "Zaproszenia wysłane pomyślnie!",
     ":count invitations have been added to the queue.": ":count zaproszeń zostało dodanych do kolejki.",
-    "Are you sure you want to do this?": "Czy na pewno chcesz to zrobić?"
+    "Are you sure you want to do this?": "Czy na pewno chcesz to zrobić?",
+    "Invitations":"Zaproszenia"
 }

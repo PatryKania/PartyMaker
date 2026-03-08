@@ -85,7 +85,19 @@ class User extends Authenticatable implements HasTenants
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return $this->events()->whereKey($tenant)->exists();
+        $hasAccess = $this->events()
+        ->whereKey($tenant)
+        ->where(function ($query) {
+            $query->where('role', 'organizer')
+                  ->orWhereNotIn('status', ['new', 'rejected']);
+        })
+        ->exists();
+
+    if (!$hasAccess) {
+        abort(redirect('/dashboard'));
+    }
+
+    return true;
     }
 
     public function isOrganizer(): bool
