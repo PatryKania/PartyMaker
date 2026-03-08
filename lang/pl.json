@@ -309,5 +309,11 @@
     "Are you sure you want to reject this invitation?": "Czy na pewno chcesz odrzucić to zaproszenie?",
     "Yes, reject": "Tak, odrzuć",
     "Invitation rejected": "Zaproszenie odrzucone",
-    "Presence confirmation for <b>:name</b> on <b>:date</b>": "Potwierdzenie obecności na <b>:name</b> dnia <b>:date</b>"
+    "Presence confirmation for <b>:name</b> on <b>:date</b>": "Potwierdzenie obecności na <b>:name</b> dnia <b>:date</b>",
+    "Send Invitation": "Wyślij zaproszenie",
+    "Send Invitations": "Wyślij zaproszenia",
+    "Invitation sent!": "Zaproszenie zostało wysłane!",
+    "Invitations sent successfully!": "Zaproszenia wysłane pomyślnie!",
+    ":count invitations have been added to the queue.": ":count zaproszeń zostało dodanych do kolejki.",
+    "Are you sure you want to do this?": "Czy na pewno chcesz to zrobić?"
 }

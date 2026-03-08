@@ -5,6 +5,8 @@ namespace App\Filament\EventPanel\Resources\Participants\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use App\Filament\Actions\SendInvitationsBulkAction;
+use App\Filament\Actions\SendInvitationAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -26,12 +28,14 @@ class ParticipantsTable
                 //
             ])
             ->recordActions([
+                SendInvitationAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    SendInvitationsBulkAction::make(),
                 ]),
             ]);
     }

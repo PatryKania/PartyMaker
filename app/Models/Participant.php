@@ -43,4 +43,24 @@ class Participant extends Model
     {
         return $this->belongsToMany(Task::class);
     }
+
+    public function parents()
+    {
+        return $this->belongsToMany(
+            Participant::class,
+            'participant_parent',
+            'participant_id',
+            'parent_id'
+        );
+    }
+
+    public function children()
+    {
+        return $this->belongsToMany(
+            Participant::class,
+            'participant_parent',
+            'parent_id',
+            'participant_id'
+        );
+    }
 }

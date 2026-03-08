@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->enum('role', array_column(ParticipantRole::cases(), 'value'))->default('guest');
             $table->enum('type', array_column(ParticipantType::cases(), 'value'))->default('adult');
