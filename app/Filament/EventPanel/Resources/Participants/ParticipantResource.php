@@ -75,7 +75,7 @@ class ParticipantResource extends Resource
     {   
         $query = parent::getEloquentQuery();
         if (! auth()->user()->isOrganizer()) {
-            return $query->whereReletedParticipant(auth()->user()->email);
+            return $query->whereReletedParticipant(auth()->user()->email,auth()->user()->id);
         }
 
         return $query;

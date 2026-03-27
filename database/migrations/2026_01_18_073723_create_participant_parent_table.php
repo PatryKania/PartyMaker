@@ -8,9 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('participants', function (Blueprint $table) {
-            $table->string('email')->nullable()->change();
-        });
 
         Schema::create('participant_parent', function (Blueprint $table) {
             $table->id();
@@ -23,9 +20,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('participant_parent');
-
-        Schema::table('participants', function (Blueprint $table) {
-            $table->string('email')->nullable(false)->change();
-        });
     }
 };

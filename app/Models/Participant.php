@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Event;
 use App\Models\User;
@@ -21,6 +22,7 @@ class Participant extends Model
         'role',
         'type',
         'status',
+        'related_id'
     ];
 
     protected $casts = [
@@ -67,21 +69,30 @@ class Participant extends Model
     public function isReletedParticipant(){
         $user = auth()->user();
 
-        if ($this->email === $user->email) {
+        if ($this->email === $user->email)
             return true;
-        }
+    
 
-        if ($this->parents()->where('email', $user->email)->exists()) {
+        if ($this->parents()->where('email', $user->email)->exists())
             return true;
-        }
+        
+
+        if($this->related_id == $user->id)
+            return true;
+
         return false;
     }
 
-    public function scopeWhereReletedParticipant($query, $userEmail)
-{
-    return $query->where(function ($subQuery) use ($userEmail) {
-        $subQuery->where('email', $userEmail)
-            ->orWhereHas('parents', fn($q) => $q->where('email', $userEmail));
-    });
-}
+    public function scopeWhereReletedParticipant($query, $userEmail,$userId)
+    {
+        return $query->where(function ($subQuery) use ($userEmail,$userId) {
+            $subQuery->where('email', $userEmail)
+                ->orWhereHas('parents', fn($q) => $q->where('email', $userEmail))->orWhere('related_id',$userId);
+        });
+    }
+
+    public function relatedParticipant(): BelongsTo
+    {
+        return $this->belongsTo(Participant::class, 'related_id');
+    }
 }

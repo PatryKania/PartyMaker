@@ -316,5 +316,9 @@
     "Invitations sent successfully!": "Zaproszenia wysłane pomyślnie!",
     ":count invitations have been added to the queue.": ":count zaproszeń zostało dodanych do kolejki.",
     "Are you sure you want to do this?": "Czy na pewno chcesz to zrobić?",
-    "Invitations":"Zaproszenia"
+    "Invitations":"Zaproszenia",
+    "Accompanying person":"Osoba towarzysząca",
+    "Check this if you dont have the accompanying person's details yet.":"Zaznacz tę opcję, jeśli nie masz jeszcze danych osoby towarzyszącej.",
+    "Related person":"Powiązana osoba",
+    "Parents":"Rodzice"
 }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('role', array_column(ParticipantRole::cases(), 'value'))->default('guest');
             $table->enum('type', array_column(ParticipantType::cases(), 'value'))->default('adult');
             $table->enum('status', array_column(ParticipantStatus::cases(), 'value'))->default('new');
+            $table->foreignId('related_id')->nullable() ->constrained('participants') ->nullOnDelete();
             $table->timestamps();
         });
     }

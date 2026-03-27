@@ -5,6 +5,7 @@ namespace App\Filament\EventPanel\Resources\Participants\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use App\Enums\ParticipantRole;
 use App\Enums\ParticipantType;
 // use Filament\Schemas\Components\Utilities\Get;
@@ -16,8 +17,21 @@ class ParticipantForm
     {
         return $schema
             ->components([
-                TextInput::make('first_name')->label(__('First name'))->required(),
-                TextInput::make('last_name')->label(__('Last name'))->required(),
+                Toggle::make('is_companion')
+                    ->label(__('Accompanying person'))->inline()->columnSpanFull()->live()->helperText(__("Check this if you dont have the accompanying person's details yet.")),
+        
+                 Select::make('related_id')
+                    ->label(__('Related person'))
+                    ->relationship('relatedParticipant', 'name')
+                    ->getOptionLabelFromRecordUsing(fn($record) => "{$record->first_name} {$record->last_name}")
+                    ->searchable()
+                    ->preload()
+                    ->dehydrated()
+                    ->visible(fn($get) => $get('is_companion'))->live()->columnSpanFull(),
+
+                TextInput::make('first_name')->label(__('First name'))->required(fn($get) => !$get('is_companion')),
+                TextInput::make('last_name')->label(__('Last name'))->required(fn($get) => !$get('is_companion')),
+
 
                 Select::make('type')->label(__('Type'))
                     ->options(ParticipantType::class)->default('adult')->required()->native(false)->live(),
@@ -37,7 +51,7 @@ class ParticipantForm
                     ->options(ParticipantRole::class)->default('guest')->required()->native(false),
 
                 TextInput::make('email')->label(__('E-mail'))->required()->email()
-                    ->required(fn($get) => $get('type') !== ParticipantType::Child)->unique(
+                    ->required(fn($get) => $get('type') !== ParticipantType::Child && !$get('is_companion'))->unique(
                         table: 'participants',
                         column: 'email',
                         ignorable: fn($record) => $record,
