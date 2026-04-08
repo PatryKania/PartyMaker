@@ -8,6 +8,7 @@ use App\Filament\Widgets\EventCreateWidget;
 use App\Filament\Widgets\FakeEventStats;
 use App\Filament\Widgets\FakeStats;
 use App\Filament\Widgets\FakeUserStats;
+use App\Http\Middleware\ApplyAccountLocale;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -69,6 +70,7 @@ class DashboardPanelProvider extends PanelProvider
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 AuthenticateSession::class,
+                ApplyAccountLocale::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,

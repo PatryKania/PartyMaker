@@ -8,6 +8,7 @@ use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\RenderHook;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Support\Htmlable;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
@@ -65,7 +66,21 @@ class CustomRegister extends Register
                 $this->getNameFormComponent(),
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
+                $this->getLocaleFormComponent(),
             ]);
+    }
+
+    protected function getLocaleFormComponent(): Component
+    {
+        return Select::make('locale')
+            ->label(__('Account language'))
+            ->options([
+                'pl' => 'Polski',
+                'en' => 'English',
+            ])
+            ->default(app()->getLocale())
+            ->native(false)
+            ->required();
     }
 
     protected function getPasswordFormComponent(): Component

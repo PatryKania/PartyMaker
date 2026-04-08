@@ -30,6 +30,7 @@ class GoogleLoginController extends Controller
                 'name' => $googleUser->name,
                 'email' => $googleUser->email,
                 'google_id' => $googleUser->id,
+                'locale' => app()->getLocale(),
                 'password' => null,
             ]);
         }

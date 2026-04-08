@@ -30,6 +30,7 @@ class FacebookLoginController extends Controller
                 'name' => $fbUser->name,
                 'email' => $fbUser->email,
                 'facebook_id' => $fbUser->id,
+                'locale' => app()->getLocale(),
                 'password' => null,
             ]);
         }

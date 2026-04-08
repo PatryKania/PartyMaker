@@ -17,6 +17,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 use App\Http\Middleware\ApplyEventThemeColors;
+use App\Http\Middleware\ApplyAccountLocale;
 use App\Filament\EventPanel\Pages\EventDashboard;
 use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
 use App\Filament\EventPanel\Widgets\QrCodeWidget;
@@ -58,6 +59,7 @@ class EventPanelPanelProvider extends PanelProvider
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 AuthenticateSession::class,
+                ApplyAccountLocale::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
