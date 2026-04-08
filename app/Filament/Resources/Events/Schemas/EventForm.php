@@ -24,17 +24,6 @@ class EventForm
                 Select::make('type')->label(__('Type'))->required()
                     ->options(EventType::class)->native(false),
                 ColorPicker::make('color')->label(__('Color')),
-                RichEditor::make('invitation')->label(__('Invitation'))->helperText(__('Invitation sent to guests')),
-                FileUpload::make('image')->label(__('Image'))
-                    ->image()
-                    ->imageEditor()
-                    ->disk('public')
-                    ->directory('event/images')
-                    ->visibility('public')
-                    ->moveFiles()->helperText(__('Main event photo, visible on event page')),
-                Checkbox::make('reminder_1')->label(__('Reminder 1 day before'))->columnSpanFull(),
-                Checkbox::make('reminder_7')->label(__('Reminder 7 days before'))->columnSpanFull(),
-                Checkbox::make('reminder_30')->label(__('Reminder 30 days before'))->columnSpanFull(),
             ]);
     }
 }

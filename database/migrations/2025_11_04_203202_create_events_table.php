@@ -18,11 +18,6 @@ return new class extends Migration
             $table->date('date');
             $table->enum('type', array_column(EventType::cases(), 'value'));
             $table->string('color');
-            $table->text('invitation')->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('reminder_1')->default(false);
-            $table->boolean('reminder_7')->default(false);
-            $table->boolean('reminder_30')->default(false);
             $table->timestamps();
         });
     }

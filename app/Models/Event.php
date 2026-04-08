@@ -9,7 +9,7 @@ use App\Enums\EventType;
 
 class Event extends Model
 {
-    protected $fillable = ['name', 'date', 'type', 'color', 'invitation', 'image', 'reminder_1', 'reminder_7', 'reminder_30'];
+    protected $fillable = ['name', 'date', 'type', 'color'];
 
     protected $casts = [
         'type' => EventType::class,
