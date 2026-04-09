@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\FacebookLoginController;
 use App\Http\Controllers\QrPdfController;
+use App\Http\Controllers\EventPageController;
 
 use App\Events\WebRtcSignal;
 use Illuminate\Http\Request;
@@ -37,3 +38,7 @@ Route::post('/video-chat/signal', function (Request $request) {
 
     return response()->json(['status' => 'ok']);
 })->middleware(['auth']);
+
+
+//Event page
+Route::get('/{slug}', [EventPageController::class, 'show'])->name('public.event.show');
