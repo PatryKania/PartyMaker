@@ -13,6 +13,8 @@ class EventPage extends Model
         'slug',
         'main_banner',
         'content',
+        'down_img',
+        'down_content'
     ];
     
     

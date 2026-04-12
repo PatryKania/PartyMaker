@@ -41,4 +41,4 @@ Route::post('/video-chat/signal', function (Request $request) {
 
 
 //Event page
-Route::get('/{slug}', [EventPageController::class, 'show'])->name('public.event.show');
+Route::get('/site/{slug}', [EventPageController::class, 'show'])->name('public.event.show');

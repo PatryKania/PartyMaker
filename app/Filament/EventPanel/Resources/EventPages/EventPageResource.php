@@ -19,6 +19,8 @@ class EventPageResource extends Resource
     protected static ?string $model = EventPage::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPresentationChartLine;
+    
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'EventPage';
 
@@ -50,11 +52,11 @@ class EventPageResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('Event Page');
+        return __('Event page');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('Event Page');
+        return __('Event page');
     }
 }
