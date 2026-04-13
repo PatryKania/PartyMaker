@@ -19,7 +19,44 @@ class TaskForm
             ->components([
                 TextInput::make('title')
                     ->label(__('Title'))
-                    ->required(),
+                    ->required()
+                    ->datalist(function ($get) {
+                  $event = filament()->getTenant();
+                if (!$event) return [];
+
+                    $suggestions = match ($event->type->value) {
+                        'wedding' => [
+                            'Photographer booking',
+                            'Menu tasting',
+                            'Sending invitations',
+                            'Dress/Suit fitting',
+                            'Wedding cake order',
+                        ],
+                        'birthday' => [
+                            'Cake order',
+                            'Balloon decorations',
+                            'Playlist preparation',
+                            'Guest list confirmation',
+                        ],
+                        'christening' => [
+                            'Church date booking',
+                            'Choosing godparents',
+                            'Restaurant table booking',
+                            'Purchase of christening set',
+                        ],
+                        'company_event' => [
+                            'Meeting agenda preparation',
+                            'AV equipment check',
+                            'Catering order',
+                            'Badge preparation',
+                        ],
+                        default => [],
+                    };
+
+                    return collect($suggestions)
+                        ->map(fn($item) => __($item))
+                        ->toArray();
+                }),
 
                 DateTimePicker::make('due_date')
                     ->label(__('Due Date'))
