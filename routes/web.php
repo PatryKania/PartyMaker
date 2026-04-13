@@ -42,3 +42,10 @@ Route::post('/video-chat/signal', function (Request $request) {
 
 //Event page
 Route::get('/site/{slug}', [EventPageController::class, 'show'])->name('public.event.show');
+
+Route::get('language/{locale}', function ($locale) {
+    if (in_array($locale, ['pl', 'en'])) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('locale.switch');

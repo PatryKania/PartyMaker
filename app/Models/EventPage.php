@@ -16,7 +16,10 @@ class EventPage extends Model
         'down_img',
         'down_content'
     ];
-    
+    protected $casts = [
+    'content' => 'array',
+    'down_content' => 'array',
+];
     
      public function event()
     {

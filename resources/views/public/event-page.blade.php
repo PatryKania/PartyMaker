@@ -7,11 +7,27 @@
     <title>
         {{ $page->event->name }} | {{ $page->event->type->getLabel() }}
     </title>
+    <link href="http://127.0.0.1:8000/css/app/custom-stylesheet.css" rel="stylesheet" data-navigate-track="">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 </head>
 
 <body class="" style="background-color:{{$page->event->color}}0d">
+
+    @php
+    $allLocales = ['pl', 'en'];
+    $otherLocales = array_filter($allLocales, fn($lang) => $lang !== app()->getLocale());
+    @endphp
+
+    <div class="fixed top-4 right-4 z-[100] flex gap-2 language-switch-trigger ">
+        @foreach($otherLocales as $locale)
+        <a href="{{ route('locale.switch', $locale) }}"
+            class="flex items-center justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-md  rounded-xl shadow-sm border border-gray-200 dark:border-white/10 text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-white dark:hover:bg-gray-800 transition-all active:scale-95 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
+            <img src="/svg/flags/{{$locale=='en'? 'gb':$locale}}.svg" class="object-cover object-center rounded-md">
+        </a>
+        @endforeach
+    </div>
     <main class="w-100 max-w-[1920px] overflow-hidden mx-auto">
+
         @if($page->main_banner)
         <div class="w-full h-screen md:h-[70vh] relative">
             <img src="{{ asset('storage/' . $page->main_banner) }}"
@@ -22,14 +38,14 @@
                 <div class="text-center">
 
                     <p class="text-lg md:text-2xl uppercase tracking-[0.3em] font-normal mb-2">
-                        Już tylko
+                        {{ __('Only')}}
                     </p>
                     <div class="relative inline-block">
                         <span x-text="days" class="text-8xl md:text-[10rem] font-black leading-none drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]">
                             {{ now()->startOfDay()->diffInDays($page->event->date) }}
                         </span>
                         <span class="text-8xl md:text-[10rem] font-black leading-none drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]">
-                            dni
+                            {{ __('days left')}}
                         </span>
                     </div>
                     <div class="w-48 h-1 bg-white mx-auto mt-4 rounded-full"></div>
@@ -41,7 +57,7 @@
         @if($page->content)
         <div class="max-w-7xl mx-auto my-20">
             <article class="prose prose-lg max-w-none">
-                {!! $page->content !!}
+                {!! $page->content[app()->getLocale()] !!}
             </article>
         </div>
         @endif
@@ -56,14 +72,24 @@
             </div>
 
             <div class="w-full md:w-1/2 prose max-w-none">
-                {!! $page->down_content !!}
+                {!! $page->down_content[app()->getLocale()] !!}
             </div>
         </div>
-        @elseif($page->down_content)
-
+        @elseif($page->down_content[app()->getLocale()])
+        <div class="max-w-7xl mx-auto my-20 flex flex-col md:flex-row items-center gap-10">
+            <div class="w-full md:w-1/2 prose max-w-none">
+                {!! $page->down_content[app()->getLocale()] !!}
+            </div>
+        </div>
 
         @elseif($page->down_img)
-
+        <div class="max-w-7xl mx-auto my-20 flex flex-col md:flex-row items-center gap-10">
+            <div class="w-full">
+                <img src="{{ asset('storage/' . $page->down_img) }}"
+                    alt="Image"
+                    class="w-full h-auto rounded-lg shadow-md object-cover">
+            </div>
+        </div>
         @endif
     </main>
     <footer>
