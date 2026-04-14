@@ -23,4 +23,13 @@ class Event extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function memories()
+    {
+        return $this->hasMany(Memory::class);
+    }
+      public function eventPage()
+    {
+        return $this->hasOne(EventPage::class);
+    }
 }

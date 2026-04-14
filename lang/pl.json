@@ -352,5 +352,17 @@
     "Badge preparation": "Przygotowanie identyfikatorów",
     "Title":"Tytuł",
     "Due date":"Data wykonania",
-    "Completed" : "Wykonane"
+    "Completed" : "Wykonane",
+    "Total Participants": "Liczba uczestników",
+    "All people on the list": "Wszystkie osoby na liście",
+    "People who accepted invitation": "Osoby, które zaakceptowały zaproszenie",
+    "Still waiting for response": "Wciąż czekają na odpowiedź",
+    "Total Memories": "Wszystkie wspomnienia",
+    "Shared moments": "Udostępnione chwile",
+    "Total Photos": "Liczba zdjęć",
+    "Captured images": "Uchwycone obrazy",
+    "Total Videos": "Liczba filmów",
+    "Recorded clips": "Nagrane klipy",
+    "Event site QrCode" :"Kod QR strony wydarzenia",
+    "Not created yet": "Jeszcze nie utworzony"
 }

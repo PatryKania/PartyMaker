@@ -2,13 +2,18 @@
 
 namespace App\Filament\EventPanel\Pages;
 
-use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
+
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;
+use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
+use App\Filament\EventPanel\Widgets\ParticipantStatsOverview;
+use App\Filament\EventPanel\Widgets\MemoryStatsOverview;
 use App\Filament\EventPanel\Widgets\QrCodeWidget;
+use App\Filament\EventPanel\Widgets\QrCodeEventSiteWidget;
 use App\Filament\EventPanel\Widgets\InvitationWidget;
 use Filament\Facades\Filament;
 use Filament\Pages\Dashboard;
+
 
 class EventDashboard extends Dashboard
 {
@@ -28,12 +33,21 @@ class EventDashboard extends Dashboard
         return Filament::getTenant()->name;
     }
 
+    public function getColumns(): array|int
+    {
+        return 3;
+    }
+
     public function getWidgets(): array
     {
         if (auth()->user()->hasPermissions())
             return [
+                ParticipantStatsOverview::class,
+                MemoryStatsOverview::class,
                 QrCodeWidget::class,
-                QrCodeMemoriesWidget::class
+                QrCodeMemoriesWidget::class,
+                QrCodeEventSiteWidget::class,
+
             ];
         else {
             return [

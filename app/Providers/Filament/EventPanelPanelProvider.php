@@ -44,8 +44,9 @@ class EventPanelPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/EventPanel/Widgets'), for: 'App\Filament\EventPanel\Widgets')
             ->widgets([
-                QrCodeWidget::class,
-                QrCodeMemoriesWidget::class
+                // EventStatsOverview::class,
+                // QrCodeWidget::class,
+                // QrCodeMemoriesWidget::class
             ])
             ->navigationItems([
                 NavigationItem::make('Dashboard')->label(fn(): string => __('Dashboard'))
