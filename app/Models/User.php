@@ -133,4 +133,9 @@ class User extends Authenticatable implements HasTenants
 
         return false;
     }
+
+    public function preferredLocale(): string
+    {
+        return $this->locale ?? config('app.locale'); 
+    }
 }

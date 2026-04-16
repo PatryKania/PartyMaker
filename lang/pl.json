@@ -383,5 +383,10 @@
     "No options selected.": "Brak zaznaczonych opcji.",
     "votes": "głosów",
     "Vote": "Głosuj",
-    "Your Vote": "Twój głos"
+    "Your Vote": "Twój głos",
+    "Reminder: Upcoming event \":event_name\"": "Przypomnienie: Nadchodzące wydarzenie \":event_name\"",
+    "Hello :user_name!": "Cześć :user_name!",
+    "This is a friendly reminder that the event **:event_name** is scheduled for **:date**. We are excited to have you with us!": "To przypomnienie, że wydarzenie **:event_name** odbędzie się **:date**. Cieszymy się, że będziesz z nami!",
+    "View Event Details": "Zobacz szczegóły wydarzenia",
+    "If you have any questions, please contact us. See you there!": "Jeśli masz pytania, skontaktuj się z nami. Do zobaczenia!"
 }

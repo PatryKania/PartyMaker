@@ -9,9 +9,12 @@ use App\Models\User;
 use App\Enums\ParticipantRole;
 use App\Enums\ParticipantStatus;
 use App\Enums\ParticipantType;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 
-class Participant extends Model
-{
+class Participant extends Model implements HasLocalePreference
+{   
+    use  Notifiable;
     protected $fillable = [
         'event_id',
         'user_id',
@@ -94,5 +97,10 @@ class Participant extends Model
     public function relatedParticipant(): BelongsTo
     {
         return $this->belongsTo(Participant::class, 'related_id');
+    }
+
+        public function preferredLocale(): string
+    {
+        return $this->user->locale;
     }
 }
