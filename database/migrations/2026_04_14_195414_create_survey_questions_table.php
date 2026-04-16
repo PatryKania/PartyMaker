@@ -11,22 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('survey_questions', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-
-            $table->string('title');
-
-            $table->text('desc')->nullable();
-
-            $table->date('date');
-
-
-            $table->time('start_time');
-
-            $table->time('end_time')->nullable();
-
+            $table->foreignId('survey_id')->constrained()->cascadeOnDelete();
+            $table->string('question_text');
+            $table->string('type');
+            $table->json('options');
             $table->timestamps();
         });
     }
@@ -36,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Schedule');
+        Schema::dropIfExists('survey_questions');
     }
 };

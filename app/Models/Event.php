@@ -28,8 +28,14 @@ class Event extends Model
     {
         return $this->hasMany(Memory::class);
     }
-      public function eventPage()
+
+    public function eventPage()
     {
         return $this->hasOne(EventPage::class);
+    }
+    
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class);
     }
 }
