@@ -17,7 +17,9 @@ use App\Enums\ParticipantRole;
 use App\Enums\ParticipantStatus;
 use Illuminate\Support\Facades\DB;
 
-class User extends Authenticatable implements HasTenants
+use Illuminate\Contracts\Translation\HasLocalePreference;
+
+class User extends Authenticatable implements HasTenants, HasLocalePreference
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -136,6 +138,6 @@ class User extends Authenticatable implements HasTenants
 
     public function preferredLocale(): string
     {
-        return $this->locale ?? config('app.locale'); 
+        return $this->locale;
     }
 }

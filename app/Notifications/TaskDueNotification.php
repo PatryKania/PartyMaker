@@ -17,25 +17,28 @@ class TaskDueNotification extends Notification
 
     public function via(object $notifiable): array
     {
-        return method_exists($notifiable, 'getKey') ? ['mail', 'database'] : ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Przypomnienie: ' . $this->task->title)
-            ->greeting('Witaj!')
-            ->line('Przypominamy o zbliżającym się terminie zadania: ' . $this->task->title)
-            ->line('Termin: ' . $this->task->due_date)
-            ->line('Powodzenia!');
+            ->subject(__('Reminder: :title', ['title' => $this->task->title]))
+            ->greeting(__('Hello!'))
+            ->line(__('We are reminding you about the upcoming deadline for the task: :title', ['title' => $this->task->title]))
+            ->line(__('Deadline: :date', ['date' => $this->task->due_date]))
+            ->line(__('Good luck!'));
     }
 
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->title('Przypomnienie o zadaniu')
-            ->body("Zadanie '{$this->task->title}' ma termin {$this->task->due_date}")
-            ->warning()
+            ->title(__('Task Reminder'))
+            ->body(__('Task \':title\' is due on :date', [
+                'title' => $this->task->title,
+                'date' => $this->task->due_date
+            ]))
+            ->info()
             ->getDatabaseMessage();
     }
 }

@@ -388,5 +388,11 @@
     "Hello :user_name!": "Cześć :user_name!",
     "This is a friendly reminder that the event **:event_name** is scheduled for **:date**. We are excited to have you with us!": "To przypomnienie, że wydarzenie **:event_name** odbędzie się **:date**. Cieszymy się, że będziesz z nami!",
     "View Event Details": "Zobacz szczegóły wydarzenia",
-    "If you have any questions, please contact us. See you there!": "Jeśli masz pytania, skontaktuj się z nami. Do zobaczenia!"
+    "If you have any questions, please contact us. See you there!": "Jeśli masz pytania, skontaktuj się z nami. Do zobaczenia!",
+    "Reminder: :title": "Przypomnienie: :title",
+    "We are reminding you about the upcoming deadline for the task: :title": "Przypominamy o zbliżającym się terminie zadania: :title",
+    "Deadline: :date": "Termin: :date",
+    "Good luck!": "Powodzenia!",
+    "Task Reminder": "Przypomnienie o zadaniu",
+    "Task ':title' is due on :date": "Zadanie ':title' ma termin :date"
 }

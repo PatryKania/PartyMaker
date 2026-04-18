@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Notifications\EventNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Enums\ParticipantStatus;
+
 class SendEventReminders extends Command
 {
     protected $signature = 'events:send-reminders';
@@ -17,19 +18,20 @@ class SendEventReminders extends Command
         $events = Event::whereDate('date', now()->addDays(7))
             ->orWhereDate('date', now()->addDays(1))
             ->with(['participants' => function ($query) {
-                $query->where('status', ParticipantStatus::Confirmed); 
-            }])
+                $query->where('status', ParticipantStatus::Confirmed)
+                    ->whereNotNull('user_id');
+            }, 'participants.user'])
             ->get();
 
-            // dd( $events);
         foreach ($events as $event) {
-            if ($event->participants->isEmpty()) {
+            $users = $event->participants->map(fn($participant) => $participant->user)->filter();
+
+            if ($users->isEmpty()) {
                 continue;
             }
-
-            Notification::send($event->participants, new EventNotification($event));
+            Notification::send($users, new EventNotification($event));
         }
 
-        $this->info('Event reminders successfully queued!');
+        $this->info('Event reminders successfully queued to users!');
     }
 }

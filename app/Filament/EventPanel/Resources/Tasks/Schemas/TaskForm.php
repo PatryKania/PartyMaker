@@ -59,7 +59,7 @@ class TaskForm
                 }),
 
                 DateTimePicker::make('due_date')
-                    ->label(__('Due Date'))
+                    ->label(__('Due date'))
                     ->required()
                     ->native(false),
 
@@ -76,12 +76,6 @@ class TaskForm
                     ->preload()
                     ->searchable()
                     ->required()
-                    ->hidden(function () {
-                        $event = filament()->getTenant();
-                        return $event->participants()
-                            ->where('role', ParticipantRole::Organizer)
-                            ->count() <= 1;
-                    })
                     ->default(function () {
                         $event = filament()->getTenant();
                         $organizers = $event->participants()
