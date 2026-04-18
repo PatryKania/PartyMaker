@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3b37fb8b8484ba5d54d428af7e3d223",
+    "content-hash": "70755c257f1a3659cf5e7cf6d71f82bc",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -4532,6 +4532,63 @@
             "time": "2025-11-17T02:59:45+00:00"
         },
         {
+            "name": "laravel-notification-channels/smsapi",
+            "version": "0.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-notification-channels/smsapi.git",
+                "reference": "debebc02b08bb830cb02ec47fb2d5281fa4bdc66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-notification-channels/smsapi/zipball/debebc02b08bb830cb02ec47fb2d5281fa4bdc66",
+                "reference": "debebc02b08bb830cb02ec47fb2d5281fa4bdc66",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/notifications": "~6.0 || ~7.0 || ~8.0 || ~9.0 || ~10.0 || ^11.0 || ^12.0 || ^13.0",
+                "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0 || ~10.0 || ^11.0 || ^12.0 || ^13.0",
+                "php": ">=7.2",
+                "smsapi/php-client": "^1.8 || ^3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.0 || ^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NotificationChannels\\Smsapi\\SmsapiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Smsapi\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mateusz Drost",
+                    "email": "mat.drost@gmail.com",
+                    "homepage": "https://github.com/mdrost",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Smsapi Notifications Channel for Laravel",
+            "homepage": "https://github.com/laravel-notification-channels/smsapi",
+            "support": {
+                "issues": "https://github.com/laravel-notification-channels/smsapi/issues",
+                "source": "https://github.com/laravel-notification-channels/smsapi/tree/0.9.1"
+            },
+            "time": "2026-04-07T02:04:19+00:00"
+        },
+        {
             "name": "laravel/framework",
             "version": "v12.37.0",
             "source": {
@@ -8852,6 +8909,50 @@
                 "source": "https://github.com/SimpleSoftwareIO/simple-qrcode/tree/4.2.0"
             },
             "time": "2021-02-08T20:43:55+00:00"
+        },
+        {
+            "name": "smsapi/php-client",
+            "version": "v1.8.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smsapi/smsapi-php-client.git",
+                "reference": "580aa0f376522ff72493b1397be8ea6db63d0126"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smsapi/smsapi-php-client/zipball/580aa0f376522ff72493b1397be8ea6db63d0126",
+                "reference": "580aa0f376522ff72493b1397be8ea6db63d0126",
+                "shasum": ""
+            },
+            "require-dev": {
+                "apigen/apigen": "^4",
+                "phpunit/phpunit": "^4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SMSApi\\": "smsapi"
+                },
+                "classmap": [
+                    "smsapi"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Library for communicating with provider",
+            "homepage": "http://smsapi.pl",
+            "keywords": [
+                "mms",
+                "sms",
+                "vms"
+            ],
+            "support": {
+                "issues": "https://github.com/smsapi/smsapi-php-client/issues",
+                "source": "https://github.com/smsapi/smsapi-php-client/tree/v1.8.7"
+            },
+            "time": "2018-01-03T10:13:48+00:00"
         },
         {
             "name": "spatie/invade",

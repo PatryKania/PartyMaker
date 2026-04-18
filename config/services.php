@@ -47,4 +47,13 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT_URI'),
     ],
 
+    'smsapi' => [
+        'auth' => [
+            'method' => 'token',
+            'credentials' => [
+                'token' => env('SMSAPI_AUTH_TOKEN'),
+            ],
+        ],
+        'test_mode' => env('SMSAPI_TEST_MODE', true),
+    ],
 ];

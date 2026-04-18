@@ -7,7 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Filament\Notifications\Notification as FilamentNotification;
+use NotificationChannels\Smsapi\SmsapiSMSMessage;
 use App\Models\Event;
+use Illuminate\Support\Facades\Log;
 
 class EventNotification extends Notification implements ShouldQueue
 {
@@ -22,7 +24,14 @@ class EventNotification extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+
+        $channels = ['mail', 'database'];
+
+        if ($notifiable->routeNotificationForSmsapi($this)) {
+            $channels[] = 'smsapi';
+        }
+
+        return $channels;
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -50,5 +59,30 @@ class EventNotification extends Notification implements ShouldQueue
             ]))
             ->info()
             ->getDatabaseMessage();
+    }
+
+
+    public function toSmsapi(object $notifiable): SmsapiSmsMessage
+    {
+        $message = new SmsapiSmsMessage();
+
+        $phoneNumber = $notifiable->routeNotificationForSmsapi($this);
+
+        $content = __('Reminder: Upcoming event :event_name is scheduled for :date.', [
+            'event_name' => $this->event->name,
+            'date' => $this->event->date
+        ]);
+
+
+
+        $message
+            ->to($phoneNumber)
+            ->content($content)
+            ->normalize()
+            ->test(config('services.smsapi.test_mode', true));
+
+        Log::info("SMSAPI:", (array)$message->data);
+
+        return $message;
     }
 }

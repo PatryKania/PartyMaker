@@ -394,5 +394,6 @@
     "Deadline: :date": "Termin: :date",
     "Good luck!": "Powodzenia!",
     "Task Reminder": "Przypomnienie o zadaniu",
-    "Task ':title' is due on :date": "Zadanie ':title' ma termin :date"
+    "Task ':title' is due on :date": "Zadanie ':title' ma termin :date",
+    "Reminder: Upcoming event :event_name is scheduled for :date.": "Przypomnienie: Nadchodzace wydarzenie :event_name zaplanowano na :date."
 }

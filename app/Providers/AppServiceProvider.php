@@ -7,6 +7,9 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 
+use Illuminate\Support\Facades\Notification;
+use NotificationChannels\Smsapi\SmsapiChannel;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,5 +41,8 @@ class AppServiceProvider extends ServiceProvider
                     'pl' => asset('svg/flags/pl.svg'),
                 ])->flagsOnly()->visible(outsidePanels: true);
         });
+        Notification::extend('smsapi', function ($app) {
+        return $app->make(SmsapiChannel::class);
+    });
     }
 }

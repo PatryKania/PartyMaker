@@ -89,18 +89,18 @@ class User extends Authenticatable implements HasTenants, HasLocalePreference
     public function canAccessTenant(Model $tenant): bool
     {
         $hasAccess = $this->events()
-        ->whereKey($tenant)
-        ->where(function ($query) {
-            $query->where('role', 'organizer')
-                  ->orWhereNotIn('status', ['new', 'rejected']);
-        })
-        ->exists();
+            ->whereKey($tenant)
+            ->where(function ($query) {
+                $query->where('role', 'organizer')
+                    ->orWhereNotIn('status', ['new', 'rejected']);
+            })
+            ->exists();
 
-    if (!$hasAccess) {
-        abort(redirect('/dashboard'));
-    }
+        if (!$hasAccess) {
+            abort(redirect('/dashboard'));
+        }
 
-    return true;
+        return true;
     }
 
     public function isOrganizer(): bool
@@ -140,4 +140,20 @@ class User extends Authenticatable implements HasTenants, HasLocalePreference
     {
         return $this->locale;
     }
+
+    public function participants(){
+        return $this->hasMany(Participant::class, 'user_id');
+    }
+
+    public function routeNotificationForSmsapi($notification)
+    {
+        if (isset($notification->event)) {
+            return '48'.$this->participants()
+                ->where('event_id', $notification->event->id)
+                ->whereNotNull('phone')
+                ->first()?->phone;
+        }
+    }
+
+
 }
