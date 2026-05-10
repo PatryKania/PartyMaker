@@ -4,8 +4,78 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70755c257f1a3659cf5e7cf6d71f82bc",
+    "content-hash": "4eecd05018ecac93727f10e9872e34dc",
     "packages": [
+        {
+            "name": "abdulmajeed-jamaan/filament-translatable-tabs",
+            "version": "v4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs.git",
+                "reference": "15e6821a83c49997c7757df9a587928bbf68cbf2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Abdulmajeed-Jamaan/filament-translatable-tabs/zipball/15e6821a83c49997c7757df9a587928bbf68cbf2",
+                "reference": "15e6821a83c49997c7757df9a587928bbf68cbf2",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^4.0",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^1.0",
+                "orchestra/testbench": "^9.0",
+                "pestphp/pest": "^3.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": [],
+                    "providers": [
+                        "AbdulmajeedJamaan\\FilamentTranslatableTabs\\FilamentTranslatableTabsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AbdulmajeedJamaan\\FilamentTranslatableTabs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdulmajeed-Jamaan",
+                    "email": "abdulmajeed.jamaan@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simplifying managing json based translation columns using tabs",
+            "homepage": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs",
+            "keywords": [
+                "Abdulmajeed-Jamaan",
+                "filament",
+                "filament-translatable-tabs",
+                "laravel",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/issues",
+                "source": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Abdulmajeed-Jamaan",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-07-30T18:18:05+00:00"
+        },
         {
             "name": "anourvalar/eloquent-serialize",
             "version": "1.3.4",

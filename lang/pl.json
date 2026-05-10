@@ -395,5 +395,13 @@
     "Good luck!": "Powodzenia!",
     "Task Reminder": "Przypomnienie o zadaniu",
     "Task ':title' is due on :date": "Zadanie ':title' ma termin :date",
-    "Reminder: Upcoming event :event_name is scheduled for :date.": "Przypomnienie: Nadchodzace wydarzenie :event_name zaplanowano na :date."
+    "Reminder: Upcoming event :event_name is scheduled for :date.": "Przypomnienie: Nadchodzace wydarzenie :event_name zaplanowano na :date.",
+    "Classic":"Klasyczny",
+    "Modern":"Nowoczesny",
+    "Theme":"Motyw",
+    "for": "dla",
+    "to the event": "na",
+    "Log in to the app": "Zaloguj się do aplikacji",
+    "Invitation for :event":"Zaproszenie na :event"
+
 }

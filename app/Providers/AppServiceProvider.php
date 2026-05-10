@@ -10,6 +10,7 @@ use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 use Illuminate\Support\Facades\Notification;
 use NotificationChannels\Smsapi\SmsapiChannel;
 
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,8 +42,19 @@ class AppServiceProvider extends ServiceProvider
                     'pl' => asset('svg/flags/pl.svg'),
                 ])->flagsOnly()->visible(outsidePanels: true);
         });
+
+        TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
+            $component
+                ->localesLabels([
+                    'pl' => __('PL'),
+                    'en' => __('EN')
+
+                ])
+                ->locales(['pl', 'en']);
+        });
+
         Notification::extend('smsapi', function ($app) {
-        return $app->make(SmsapiChannel::class);
-    });
+            return $app->make(SmsapiChannel::class);
+        });
     }
 }

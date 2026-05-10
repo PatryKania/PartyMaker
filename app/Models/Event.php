@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Participant;
 use App\Enums\EventType;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Event extends Model
 {
@@ -37,5 +37,8 @@ class Event extends Model
     public function surveys()
     {
         return $this->hasMany(Survey::class);
+    }
+    public function invitation():HasOne{
+         return $this->hasOne(Invitation::class);
     }
 }

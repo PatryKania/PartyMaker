@@ -2,12 +2,10 @@
 
 namespace App\Filament\Actions;
 
-
 use Filament\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ParticipantInvitation;
-use App\Enums\ParticipantType;
 use Filament\Notifications\Notification;
 use App\Enums\ParticipantStatus;
 
@@ -25,17 +23,27 @@ class SendInvitationsBulkAction
                 $sentCount = 0;
 
                 foreach ($records as $record) {
-                     $record->update(['status' => ParticipantStatus::Pending]);
                     if ($record->email && $record->status == ParticipantStatus::New) {
                         Mail::to($record->email)->queue(new ParticipantInvitation($record));
+                        $record->update(['status' => ParticipantStatus::Pending]);
                         $sentCount++;
                     }
                 }
 
+                if ($sentCount > 0) {
+                    Notification::make()
+                        ->title(__('Invitations sent successfully!'))
+                        ->body(__(':count invitations have been added to the queue.', ['count' => $sentCount]))
+                        ->success()
+                        ->send();
+
+                    return;
+                }
+
                 Notification::make()
-                    ->title(__('Invitations sent successfully!'))
-                    ->body(__(':count invitations have been added to the queue.', ['count' => $sentCount]))
-                    ->success()
+                    ->title(__('No invitations were sent'))
+                    ->body(__('Selected participants do not have email addresses or their invitations have already been sent.'))
+                    ->warning()
                     ->send();
             })
             ->deselectRecordsAfterCompletion();

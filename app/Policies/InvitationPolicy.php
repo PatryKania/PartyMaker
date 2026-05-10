@@ -2,23 +2,19 @@
 
 namespace App\Policies;
 
-use App\Models\Survey;
+use App\Models\Invitation;
 use App\Models\User;
 
-class SurveyPolicy
+class InvitationPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissions();
+          return (bool) $user->isOrganizer();
     }
 
-    public function view(User $user, Survey $survey): bool
+    public function view(User $user,Invitation $invitation): bool
     {
-        if ($user->isOrganizer()) {
-            return true;
-        }
-
-        return false;
+         return (bool) $user->isOrganizer();
     }
 
     public function create(User $user): bool
@@ -26,12 +22,12 @@ class SurveyPolicy
         return (bool) $user->isOrganizer();
     }
 
-    public function update(User $user, Survey $survey): bool
+    public function update(User $user,Invitation $invitation): bool
     {
         return (bool) $user->isOrganizer();
     }
 
-    public function delete(User $user, Survey $survey): bool
+    public function delete(User $user,Invitation $invitation): bool
     {
         return (bool) $user->isOrganizer();
     }
@@ -41,12 +37,12 @@ class SurveyPolicy
         return (bool) $user->isOrganizer();
     }
 
-    public function restore(User $user, Survey $survey): bool
+    public function restore(User $user,Invitation $invitation): bool
     {
         return (bool) $user->isOrganizer();
     }
 
-    public function forceDelete(User $user, Survey $survey): bool
+    public function forceDelete(User $user,Invitation $invitation): bool
     {
         return (bool) $user->isOrganizer();
     }

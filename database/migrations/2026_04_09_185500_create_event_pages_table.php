@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('event_pages', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
             $table->string('slug')->unique();
             $table->string('main_banner')->nullable();
             $table->string('down_img')->nullable();

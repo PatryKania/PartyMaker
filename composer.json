@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "abdulmajeed-jamaan/filament-translatable-tabs": "^4.0",
         "barryvdh/laravel-dompdf": "^3.1",
         "bezhansalleh/filament-language-switch": "*",
         "filament/filament": "~4.0",

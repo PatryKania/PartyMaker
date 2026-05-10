@@ -8,9 +8,6 @@
                 ]) !!}
             </h2>
 
-            <div class="invitation-widget-txt">
-                {!! $event->invitation !!}
-            </div>
 
             <div class="invitation-widget-btns">
                 {{ ($this->rejectAction)(['record' => $event->id]) }}
