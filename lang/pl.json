@@ -402,6 +402,26 @@
     "for": "dla",
     "to the event": "na",
     "Log in to the app": "Zaloguj się do aplikacji",
-    "Invitation for :event":"Zaproszenie na :event"
-
+    "Invitation for :event":"Zaproszenie na :event",
+    "AI suggestions": "Sugestie AI",
+    "These are only suggestions. They are stored for this session. Copy one and paste it into the task title.": "To są tylko sugestie. Są przechowywane na czas tej sesji. Skopiuj jedną i wklej ją jako tytuł zadania.",
+    "Short description for AI": "Krótki opis dla AI",
+    "Optional short context": "Opcjonalny krótki kontekst",
+    "Suggest with AI": "Podpowiedz z AI",
+    "No event selected": "Nie wybrano wydarzenia",
+    "No new suggestions generated": "Nie wygenerowano nowych sugestii",
+    "AI did not find new task suggestions that are different from existing tasks.": "AI nie znalazło nowych sugestii zadań różniących się od już istniejących.",
+    "AI suggestions generated": "Sugestie AI zostały wygenerowane",
+    "Suggestions were saved for this session.": "Sugestie zostały zapisane na czas tej sesji.",
+    "AI suggestions failed": "Nie udało się wygenerować sugestii AI",
+    "Check your LLM API configuration.": "Sprawdź konfigurację API modelu językowego.",
+    "Clear suggestions": "Wyczyść sugestie",
+    "AI suggestions cleared": "Sugestie AI zostały wyczyszczone",
+    "Suggestion": "Sugestia",
+    "Copied to clipboard": "Skopiowano do schowka",
+    "Click the copy button and paste this into the task title.": "Kliknij przycisk kopiowania i wklej tę sugestię jako tytuł zadania.",
+    "AI gift suggestions": "Sugestie prezentów AI",
+    "These are only suggestions. They are stored for this session. Copy one and paste it into the gift name.": "To są tylko sugestie. Są przechowywane na czas tej sesji. Skopiuj jedną i wklej ją jako nazwę prezentu.",
+    "AI did not find new gift suggestions that are different from existing gifts.": "AI nie znalazło nowych sugestii prezentów różniących się od już istniejących.",
+    "Click the copy button and paste this into the gift name.": "Kliknij przycisk kopiowania i wklej tę sugestię jako nazwę prezentu."
 }
