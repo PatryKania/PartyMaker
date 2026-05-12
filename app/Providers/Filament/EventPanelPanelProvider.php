@@ -19,8 +19,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Http\Middleware\ApplyEventThemeColors;
 use App\Http\Middleware\ApplyAccountLocale;
 use App\Filament\EventPanel\Pages\EventDashboard;
-use App\Filament\EventPanel\Widgets\QrCodeMemoriesWidget;
-use App\Filament\EventPanel\Widgets\QrCodeWidget;
 use App\Models\Event;
 use Filament\Navigation\NavigationItem;
 
@@ -28,12 +26,12 @@ class EventPanelPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-
         return $panel
             ->id('event')
             ->path('event')
             ->brandName('PartyMaker')
             ->tenant(Event::class)
+             ->darkMode(false)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -44,9 +42,6 @@ class EventPanelPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/EventPanel/Widgets'), for: 'App\Filament\EventPanel\Widgets')
             ->widgets([
-                // EventStatsOverview::class,
-                // QrCodeWidget::class,
-                // QrCodeMemoriesWidget::class
             ])
             ->navigationItems([
                 NavigationItem::make('Dashboard')->label(fn(): string => __('Dashboard'))
@@ -68,7 +63,6 @@ class EventPanelPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])->tenantMiddleware([
                 ApplyEventThemeColors::class,
-                
             ])
             ->authMiddleware([
                 Authenticate::class,

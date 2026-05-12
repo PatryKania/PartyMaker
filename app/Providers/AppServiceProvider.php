@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Notification;
 use NotificationChannels\Smsapi\SmsapiChannel;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,8 +24,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-
-
         FilamentAsset::register([
             Css::make('custom-stylesheet', __DIR__ . '/../../resources/css/custom-styles.css'),
         ]);
@@ -56,5 +55,8 @@ class AppServiceProvider extends ServiceProvider
         Notification::extend('smsapi', function ($app) {
             return $app->make(SmsapiChannel::class);
         });
+         if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

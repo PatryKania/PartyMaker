@@ -49,3 +49,5 @@ Route::get('language/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('locale.switch');
+
+Route::redirect('login', 'dashboard/login')->name('login');
