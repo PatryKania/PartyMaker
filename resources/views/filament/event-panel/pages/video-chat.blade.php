@@ -1,47 +1,37 @@
 <x-filament-panels::page>
     @vite(['resources/js/app.js'])
 
-    <div
-        x-data="laravelVideoChat()"
-        x-init="init()"
-        @video-chat:start.window="startCall()"
-        @video-chat:leave.window="leaveCall()"
-        class="space-y-6">
-
+    <div x-data="laravelVideoChat()" x-init="init()" class="space-y-6">
         <x-filament::section>
             <x-slot name="heading">
                 {{ __('Participants') }}
             </x-slot>
 
             <div class="video-chat-grid">
-                <div class="video-chat-tile bg-black shadow-sm ring-1 ring-gray-950/10 dark:ring-white/10">
-                    <video
-                        x-ref="localVideo"
-                        data-local-video
-                        autoplay
-                        playsinline
-                        muted
-                        class="h-full w-full scale-x-[-1] object-cover video-chat-tile">
-                    </video>
-                </div>
+                <template x-if="isInCall">
+                    <div class="video-chat-tile bg-black shadow-sm ring-1 ring-gray-950/10 dark:ring-white/10">
+                        <video
+                            x-ref="localVideo"
+                            data-local-video
+                            autoplay
+                            playsinline
+                            muted
+                            class="h-full w-full scale-x-[-1] object-cover">
+                        </video>
+                    </div>
+                </template>
 
-                <div class="video-chat-tile bg-black shadow-sm ring-1 ring-gray-950/10 dark:ring-white/10">
-                    <video
-                        x-ref="remoteVideo"
-                        data-remote-video
-                        autoplay
-                        playsinline
-                        class="h-full w-full object-cover">
-                    </video>
-                </div>
-
-                <div class="video-chat-tile bg-black shadow-sm ring-1 ring-gray-950/10 dark:ring-white/10">
-                    <video
-                        autoplay
-                        playsinline
-                        class="h-full w-full object-cover">
-                    </video>
-                </div>
+                <template x-for="participant in remoteStreams" :key="participant.userId">
+                    <div class="video-chat-tile bg-black shadow-sm ring-1 ring-gray-950/10 dark:ring-white/10">
+                        <video
+                            autoplay
+                            playsinline
+                            class="h-full w-full object-cover"
+                            x-init="$el.srcObject = participant.stream"
+                            x-effect="$el.srcObject = participant.stream">
+                        </video>
+                    </div>
+                </template>
             </div>
         </x-filament::section>
     </div>
@@ -82,224 +72,213 @@
     <script>
         function laravelVideoChat() {
             return {
-                status: 'Inicjalizacja...',
-                connectionState: 'idle',
+                userId: @js(auth()->id()),
                 isInCall: false,
-                echoReady: false,
-                remoteStreamActive: false,
-                audioEnabled: true,
-                videoEnabled: true,
                 localStream: null,
-                peerConnection: null,
                 channel: null,
                 roomId: 'pokoj-glowny',
-                roomLabel: 'Pokój rozmowy',
+                peerConnections: {},
+                remoteStreams: [],
 
                 rtcConfig: {
-                    iceServers: [{
-                            urls: 'stun:stun.l.google.com:19302'
-                        },
-                        {
-                            urls: 'stun:stun1.l.google.com:19302'
-                        }
-                    ]
+                    iceServers: [
+                        { urls: 'stun:stun.l.google.com:19302' },
+                        { urls: 'stun:stun1.l.google.com:19302' },
+                    ],
                 },
 
-                async init() {
+                init() {
                     window.PartyMakerVideoChat = this;
 
                     Alpine.store('videoChat', {
-                        isInCall: false
+                        isInCall: false,
                     });
 
                     this.roomId = this.resolveRoomId();
-                    this.roomLabel = this.roomId.startsWith('event-') ? `Pokój eventu ${this.roomId.replace('event-', '')}` : 'Pokój rozmowy';
-
-                    let attempts = 0;
-                    const checkEcho = setInterval(() => {
-                        if (window.Echo) {
-                            clearInterval(checkEcho);
-                            this.echoReady = true;
-                            this.status = 'Gotowy do połączenia';
-                        } else {
-                            attempts++;
-                            if (attempts > 50) {
-                                clearInterval(checkEcho);
-                                this.status = 'Nie udało się załadować systemu rozmów';
-                            }
-                        }
-                    }, 100);
                 },
 
                 resolveRoomId() {
                     const match = window.location.pathname.match(/\/event\/([^/]+)\/video-chat/);
 
-                    if (match && match[1]) {
-                        return `event-${match[1]}`;
-                    }
-
-                    return this.roomId;
-                },
-
-                get callInfo() {
-                    if (!this.echoReady) return 'Ładowanie połączenia z serwerem';
-                    if (!this.isInCall) return 'Kamera i mikrofon uruchomią się po dołączeniu';
-                    if (this.remoteStreamActive) return 'Połączenie aktywne';
-
-                    return 'Szukam drugiej osoby w pokoju';
+                    return match?.[1] ? `event-${match[1]}` : this.roomId;
                 },
 
                 syncCallState() {
-                    if (Alpine.store('videoChat')) {
-                        Alpine.store('videoChat').isInCall = this.isInCall;
-                    }
+                    Alpine.store('videoChat').isInCall = this.isInCall;
                 },
 
                 getLocalVideo() {
                     return this.$refs.localVideo ?? this.$root.querySelector('[data-local-video]');
                 },
 
-                getRemoteVideo() {
-                    return this.$refs.remoteVideo ?? this.$root.querySelector('[data-remote-video]');
+                clearVideo(video) {
+                    if (!video) return;
+
+                    video.pause();
+                    video.srcObject = null;
+                    video.removeAttribute('src');
+                    video.load();
+                },
+
+                waitForEcho() {
+                    return new Promise((resolve) => {
+                        let attempts = 0;
+
+                        const interval = setInterval(() => {
+                            attempts++;
+
+                            if (window.Echo || attempts > 50) {
+                                clearInterval(interval);
+                                resolve(Boolean(window.Echo));
+                            }
+                        }, 100);
+                    });
                 },
 
                 async startCall() {
+                    if (this.isInCall || !(await this.waitForEcho())) return;
+
                     try {
                         this.localStream = await navigator.mediaDevices.getUserMedia({
                             video: true,
-                            audio: true
+                            audio: true,
                         });
-                        const localVideo = this.getLocalVideo();
-
-                        if (localVideo) {
-                            localVideo.srcObject = this.localStream;
-                        }
-                    } catch (e) {
-                        this.status = 'Brak dostępu do kamery lub mikrofonu';
+                    } catch (error) {
                         return;
                     }
 
                     this.isInCall = true;
                     this.syncCallState();
-                    this.connectionState = 'connecting';
-                    this.status = 'Łączenie z pokojem...';
+
+                    this.$nextTick(() => {
+                        const localVideo = this.getLocalVideo();
+
+                        if (localVideo) {
+                            localVideo.srcObject = this.localStream;
+                        }
+                    });
+
                     this.connectToSignalingServer();
                 },
 
                 connectToSignalingServer() {
                     this.channel = window.Echo.join(`chat.${this.roomId}`)
                         .here((users) => {
-                            this.status = `W pokoju: ${users.length} ${users.length === 1 ? 'osoba' : 'osoby'}`;
-                            this.connectionState = users.length > 1 ? 'connected' : 'connecting';
-                            if (users.length > 1) {
-                                this.createPeerConnection();
-                                this.createOffer();
-                            }
+                            users
+                                .filter((user) => user.id !== this.userId)
+                                .forEach((user) => this.createOffer(user.id));
                         })
                         .joining((user) => {
-                            this.status = 'Ktoś dołączył do rozmowy';
-                            this.connectionState = 'connected';
-                            if (!this.peerConnection) {
-                                this.createPeerConnection();
+                            if (user.id !== this.userId) {
+                                this.createPeerConnection(user.id);
                             }
                         })
                         .leaving((user) => {
-                            this.status = 'Rozmówca rozłączył się';
-                            this.connectionState = 'connecting';
-                            this.remoteStreamActive = false;
+                            this.removeParticipant(user.id);
                         })
                         .listenForWhisper('signal', (data) => {
                             this.handleSignal(data);
                         });
                 },
 
-                createPeerConnection() {
-                    if (this.peerConnection) return;
+                createPeerConnection(userId) {
+                    if (this.peerConnections[userId]) {
+                        return this.peerConnections[userId];
+                    }
 
-                    this.peerConnection = new RTCPeerConnection(this.rtcConfig);
+                    const peerConnection = new RTCPeerConnection(this.rtcConfig);
 
-                    this.localStream.getTracks().forEach(track => {
-                        this.peerConnection.addTrack(track, this.localStream);
+                    this.localStream.getTracks().forEach((track) => {
+                        peerConnection.addTrack(track, this.localStream);
                     });
 
-                    this.peerConnection.ontrack = (event) => {
-                        const remoteVideo = this.getRemoteVideo();
-
-                        if (remoteVideo) {
-                            remoteVideo.srcObject = event.streams[0];
-                        }
-                        this.remoteStreamActive = true;
-                        this.connectionState = 'connected';
-                        this.status = 'Połączenie aktywne';
+                    peerConnection.ontrack = (event) => {
+                        this.addRemoteStream(userId, event.streams[0]);
                     };
 
-                    this.peerConnection.onicecandidate = (event) => {
+                    peerConnection.onicecandidate = (event) => {
                         if (event.candidate) {
-                            this.sendSignal({
+                            this.sendSignal(userId, {
                                 type: 'candidate',
-                                candidate: event.candidate
+                                candidate: event.candidate,
                             });
                         }
                     };
+
+                    this.peerConnections[userId] = peerConnection;
+
+                    return peerConnection;
                 },
 
-                async createOffer() {
-                    const offer = await this.peerConnection.createOffer();
-                    await this.peerConnection.setLocalDescription(offer);
-                    this.sendSignal({
+                addRemoteStream(userId, stream) {
+                    const existingStream = this.remoteStreams.find((participant) => participant.userId === userId);
+
+                    if (existingStream) {
+                        existingStream.stream = stream;
+                        return;
+                    }
+
+                    this.remoteStreams.push({ userId, stream });
+                },
+
+                removeParticipant(userId) {
+                    this.peerConnections[userId]?.close();
+                    delete this.peerConnections[userId];
+                    this.remoteStreams = this.remoteStreams.filter((participant) => participant.userId !== userId);
+                },
+
+                async createOffer(userId) {
+                    const peerConnection = this.createPeerConnection(userId);
+                    const offer = await peerConnection.createOffer();
+
+                    await peerConnection.setLocalDescription(offer);
+
+                    this.sendSignal(userId, {
                         type: 'offer',
-                        sdp: offer
+                        sdp: offer,
                     });
                 },
 
-                async createAnswer() {
-                    const answer = await this.peerConnection.createAnswer();
-                    await this.peerConnection.setLocalDescription(answer);
-                    this.sendSignal({
+                async createAnswer(userId) {
+                    const peerConnection = this.createPeerConnection(userId);
+                    const answer = await peerConnection.createAnswer();
+
+                    await peerConnection.setLocalDescription(answer);
+
+                    this.sendSignal(userId, {
                         type: 'answer',
-                        sdp: answer
+                        sdp: answer,
                     });
                 },
 
                 async handleSignal(data) {
-                    if (!this.peerConnection) this.createPeerConnection();
+                    if (data.to !== this.userId || data.from === this.userId) return;
+
+                    const peerConnection = this.createPeerConnection(data.from);
 
                     try {
                         if (data.type === 'offer') {
-                            await this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
-                            await this.createAnswer();
-                        } else if (data.type === 'answer') {
-                            await this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
-                        } else if (data.type === 'candidate') {
-                            await this.peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
+                            await this.createAnswer(data.from);
+                        }
+
+                        if (data.type === 'answer') {
+                            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
+                        }
+
+                        if (data.type === 'candidate') {
+                            await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
                         }
                     } catch (error) {
-                        console.error('Błąd sygnału:', error);
-                        this.status = 'Wystąpił błąd połączenia';
+                        console.error(error);
                     }
                 },
 
-                sendSignal(data) {
-                    if (this.channel) {
-                        this.channel.whisper('signal', data);
-                    }
-                },
-
-                toggleAudio() {
-                    if (!this.localStream) return;
-
-                    this.audioEnabled = !this.audioEnabled;
-                    this.localStream.getAudioTracks().forEach(track => {
-                        track.enabled = this.audioEnabled;
-                    });
-                },
-
-                toggleVideo() {
-                    if (!this.localStream) return;
-
-                    this.videoEnabled = !this.videoEnabled;
-                    this.localStream.getVideoTracks().forEach(track => {
-                        track.enabled = this.videoEnabled;
+                sendSignal(to, payload) {
+                    this.channel?.whisper('signal', {
+                        ...payload,
+                        from: this.userId,
+                        to,
                     });
                 },
 
@@ -308,36 +287,17 @@
                         window.Echo.leave(`chat.${this.roomId}`);
                     }
 
-                    if (this.peerConnection) {
-                        this.peerConnection.close();
-                    }
+                    Object.values(this.peerConnections).forEach((peerConnection) => peerConnection.close());
+                    this.localStream?.getTracks().forEach((track) => track.stop());
 
-                    if (this.localStream) {
-                        this.localStream.getTracks().forEach(track => track.stop());
-                    }
-
+                    this.clearVideo(this.getLocalVideo());
                     this.channel = null;
-                    this.peerConnection = null;
+                    this.peerConnections = {};
+                    this.remoteStreams = [];
                     this.localStream = null;
                     this.isInCall = false;
                     this.syncCallState();
-                    this.remoteStreamActive = false;
-                    this.connectionState = 'idle';
-                    this.audioEnabled = true;
-                    this.videoEnabled = true;
-                    this.status = 'Rozmowa zakończona';
-
-                    const localVideo = this.getLocalVideo();
-                    const remoteVideo = this.getRemoteVideo();
-
-                    if (localVideo) {
-                        localVideo.srcObject = null;
-                    }
-
-                    if (remoteVideo) {
-                        remoteVideo.srcObject = null;
-                    }
-                }
+                },
             };
         }
     </script>
