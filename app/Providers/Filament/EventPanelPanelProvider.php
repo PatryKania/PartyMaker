@@ -30,6 +30,7 @@ class EventPanelPanelProvider extends PanelProvider
             ->id('event')
             ->path('event')
             ->brandName('PartyMaker')
+            ->globalSearch(false)
             ->tenant(Event::class)
              ->darkMode(false)
             ->colors([
