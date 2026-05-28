@@ -4,7 +4,9 @@ namespace App\Filament\EventPanel\Pages;
 
 use Filament\Pages\Page;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Contracts\Support\Htmlable;
 
 class VideoChat extends Page
 {
@@ -22,5 +24,47 @@ class VideoChat extends Page
     public static function getNavigationLabel(): string
     {
         return __('Conference Room');
+    }
+
+    public function getTitle(): string | Htmlable
+    {
+        return __('Conference Room');
+    }
+
+    public function getHeading(): string | Htmlable
+    {
+        return __('Conference Room');
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            __('Conference Room'),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('joinCall')
+                ->label(__('Join call'))
+                ->color('primary')
+                ->button()
+                ->extraAttributes([
+                    'x-show' => '!($store.videoChat?.isInCall ?? false)',
+                    'x-cloak' => true,
+                ])
+                ->alpineClickHandler('window.PartyMakerVideoChat?.startCall()'),
+
+            Action::make('leaveCall')
+                ->label(__('End call'))
+                ->color('danger')
+                ->button()
+                ->extraAttributes([
+                    'x-show' => '$store.videoChat?.isInCall ?? false',
+                    'x-cloak' => true,
+                ])
+                ->alpineClickHandler('window.PartyMakerVideoChat?.leaveCall()'),
+        ];
     }
 }
