@@ -72,18 +72,24 @@
     <script>
         function laravelVideoChat() {
             return {
-                userId: @js(auth()->id()),
+                userId: String(@js(auth()->id())),
                 isInCall: false,
                 localStream: null,
                 channel: null,
                 roomId: 'pokoj-glowny',
                 peerConnections: {},
+                pendingIceCandidates: {},
                 remoteStreams: [],
 
                 rtcConfig: {
                     iceServers: [
                         { urls: 'stun:stun.l.google.com:19302' },
                         { urls: 'stun:stun1.l.google.com:19302' },
+                        ...(@js(config('services.turn.url')) ? [{
+                            urls: @js(config('services.turn.url')),
+                            username: @js(config('services.turn.username')),
+                            credential: @js(config('services.turn.credential')),
+                        }] : []),
                     ],
                 },
 
@@ -105,6 +111,14 @@
 
                 syncCallState() {
                     Alpine.store('videoChat').isInCall = this.isInCall;
+                },
+
+                normalizeUserId(userId) {
+                    return String(userId);
+                },
+
+                shouldCreateOffer(userId) {
+                    return this.userId.localeCompare(this.normalizeUserId(userId), undefined, { numeric: true }) < 0;
                 },
 
                 getLocalVideo() {
@@ -165,16 +179,29 @@
                     this.channel = window.Echo.join(`chat.${this.roomId}`)
                         .here((users) => {
                             users
+                                .map((user) => ({ ...user, id: this.normalizeUserId(user.id) }))
                                 .filter((user) => user.id !== this.userId)
-                                .forEach((user) => this.createOffer(user.id));
+                                .forEach((user) => {
+                                    this.createPeerConnection(user.id);
+
+                                    if (this.shouldCreateOffer(user.id)) {
+                                        this.createOffer(user.id);
+                                    }
+                                });
                         })
                         .joining((user) => {
-                            if (user.id !== this.userId) {
-                                this.createPeerConnection(user.id);
+                            const userId = this.normalizeUserId(user.id);
+
+                            if (userId !== this.userId) {
+                                this.createPeerConnection(userId);
+
+                                if (this.shouldCreateOffer(userId)) {
+                                    this.createOffer(userId);
+                                }
                             }
                         })
                         .leaving((user) => {
-                            this.removeParticipant(user.id);
+                            this.removeParticipant(this.normalizeUserId(user.id));
                         })
                         .listenForWhisper('signal', (data) => {
                             this.handleSignal(data);
@@ -182,6 +209,8 @@
                 },
 
                 createPeerConnection(userId) {
+                    userId = this.normalizeUserId(userId);
+
                     if (this.peerConnections[userId]) {
                         return this.peerConnections[userId];
                     }
@@ -211,10 +240,19 @@
                 },
 
                 addRemoteStream(userId, stream) {
+                    userId = this.normalizeUserId(userId);
+
                     const existingStream = this.remoteStreams.find((participant) => participant.userId === userId);
 
                     if (existingStream) {
-                        existingStream.stream = stream;
+                        this.remoteStreams = this.remoteStreams.map((participant) => {
+                            if (participant.userId !== userId) {
+                                return participant;
+                            }
+
+                            return { ...participant, stream };
+                        });
+
                         return;
                     }
 
@@ -222,12 +260,17 @@
                 },
 
                 removeParticipant(userId) {
+                    userId = this.normalizeUserId(userId);
+
                     this.peerConnections[userId]?.close();
                     delete this.peerConnections[userId];
+                    delete this.pendingIceCandidates[userId];
                     this.remoteStreams = this.remoteStreams.filter((participant) => participant.userId !== userId);
                 },
 
                 async createOffer(userId) {
+                    userId = this.normalizeUserId(userId);
+
                     const peerConnection = this.createPeerConnection(userId);
                     const offer = await peerConnection.createOffer();
 
@@ -240,6 +283,8 @@
                 },
 
                 async createAnswer(userId) {
+                    userId = this.normalizeUserId(userId);
+
                     const peerConnection = this.createPeerConnection(userId);
                     const answer = await peerConnection.createAnswer();
 
@@ -251,22 +296,45 @@
                     });
                 },
 
-                async handleSignal(data) {
-                    if (data.to !== this.userId || data.from === this.userId) return;
+                async flushPendingIceCandidates(userId, peerConnection) {
+                    userId = this.normalizeUserId(userId);
 
-                    const peerConnection = this.createPeerConnection(data.from);
+                    const candidates = this.pendingIceCandidates[userId] ?? [];
+                    delete this.pendingIceCandidates[userId];
+
+                    for (const candidate of candidates) {
+                        await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+                    }
+                },
+
+                async handleSignal(data) {
+                    const from = this.normalizeUserId(data.from);
+                    const to = this.normalizeUserId(data.to);
+
+                    if (to !== this.userId || from === this.userId) return;
+
+                    const peerConnection = this.createPeerConnection(from);
 
                     try {
                         if (data.type === 'offer') {
                             await peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
-                            await this.createAnswer(data.from);
+                            await this.flushPendingIceCandidates(from, peerConnection);
+                            await this.createAnswer(from);
                         }
 
                         if (data.type === 'answer') {
                             await peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
+                            await this.flushPendingIceCandidates(from, peerConnection);
                         }
 
                         if (data.type === 'candidate') {
+                            if (!peerConnection.remoteDescription) {
+                                this.pendingIceCandidates[from] ??= [];
+                                this.pendingIceCandidates[from].push(data.candidate);
+
+                                return;
+                            }
+
                             await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
                         }
                     } catch (error) {
@@ -278,7 +346,7 @@
                     this.channel?.whisper('signal', {
                         ...payload,
                         from: this.userId,
-                        to,
+                        to: this.normalizeUserId(to),
                     });
                 },
 
@@ -293,6 +361,7 @@
                     this.clearVideo(this.getLocalVideo());
                     this.channel = null;
                     this.peerConnections = {};
+                    this.pendingIceCandidates = {};
                     this.remoteStreams = [];
                     this.localStream = null;
                     this.isInCall = false;
