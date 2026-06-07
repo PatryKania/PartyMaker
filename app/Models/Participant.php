@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Event;
 use App\Models\User;
@@ -12,6 +13,8 @@ use App\Enums\ParticipantType;
 
 class Participant extends Model 
 {   
+    use HasFactory;
+
     protected $fillable = [
         'event_id',
         'user_id',
