@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Task;
+use App\Models\EventPage;
 use App\Models\User;
 
 class EventPagePolicy
@@ -16,11 +16,11 @@ class EventPagePolicy
     {
         return $user->isOrganizer();
     }
-    public function update(User $user, Task $Task): bool
+    public function update(User $user, EventPage $page): bool
     {
         return $user->isOrganizer();
     }
-    public function delete(User $user, Task $Task): bool
+    public function delete(User $user, EventPage $page): bool
     {
         return $user->isOrganizer();
     }

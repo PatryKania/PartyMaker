@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+
+
         FilamentAsset::register([
             Css::make('custom-stylesheet', __DIR__ . '/../../resources/css/custom-styles.css'),
         ]);
@@ -56,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
             return $app->make(SmsapiChannel::class);
         });
          if (app()->environment('production')) {
+// 		URL::forceRootUrl(config('app.url'));
             URL::forceScheme('https');
         }
     }
