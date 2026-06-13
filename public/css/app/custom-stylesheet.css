@@ -179,6 +179,21 @@ body:has(.custom-auth-wrapper) .fi-dropdown:has(.language-switch-trigger) {
 }
 
 /* Custom lang switcher - END */
+
+@media(max-width:1400px){
+body:has(.custom-auth-wrapper) .fi-dropdown:has(.language-switch-trigger){
+    right: 32px!important;
+}
+
+.auth-left.auth-column{
+	width: 100vw!important;
+    padding: 20px!important;
+}
+
+.auth-right.auth-column{
+    display:none!important;
+}
+}
 /* AUTH - END */
 
 /* MEMORIES - START */

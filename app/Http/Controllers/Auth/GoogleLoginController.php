@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class GoogleLoginController extends Controller
 {
@@ -31,7 +33,7 @@ class GoogleLoginController extends Controller
                 'email' => $googleUser->email,
                 'google_id' => $googleUser->id,
                 'locale' => app()->getLocale(),
-                'password' => null,
+                'password' => Hash::make(Str::random(32)),
             ]);
         }
 

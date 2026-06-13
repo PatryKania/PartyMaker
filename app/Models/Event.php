@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Participant;
 use App\Enums\EventType;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Event extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'date', 'type', 'color'];
 
     protected $casts = [

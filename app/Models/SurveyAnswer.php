@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SurveyAnswer extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['participant_id', 'survey_question_id', 'value'];
     protected $casts = ['value' => 'array'];
 

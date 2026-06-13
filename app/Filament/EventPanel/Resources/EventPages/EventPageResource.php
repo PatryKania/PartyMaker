@@ -22,7 +22,7 @@ class EventPageResource extends Resource
     
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $recordTitleAttribute = 'EventPage';
+    // protected static ?string $recordTitleAttribute = 'EventPage';
 
     public static function form(Schema $schema): Schema
     {

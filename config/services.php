@@ -56,4 +56,16 @@ return [
         ],
         'test_mode' => env('SMSAPI_TEST_MODE', true),
     ],
+
+    'llm' => [
+        'api_key' => env('LLM_API_KEY'),
+        'base_url' => env('LLM_BASE_URL'),
+        'model' => env('LLM_MODEL', 'deepseek-v4-flash'),
+    ],
+
+    'turn' => [
+        'url' => env('TURN_URL'),
+        'username' => env('TURN_USERNAME'),
+        'credential' => env('TURN_CREDENTIAL'),
+    ],
 ];

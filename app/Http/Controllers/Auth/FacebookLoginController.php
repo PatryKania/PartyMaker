@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class FacebookLoginController extends Controller
 {
@@ -31,7 +33,7 @@ class FacebookLoginController extends Controller
                 'email' => $fbUser->email,
                 'facebook_id' => $fbUser->id,
                 'locale' => app()->getLocale(),
-                'password' => null,
+                 'password' => Hash::make(Str::random(32)),
             ]);
         }
 
